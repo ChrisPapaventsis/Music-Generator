@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="home_page.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>Music Generator</title>
+</head>
+<body>
+	<h1>Make your own music</h1>
+
+	<h3>It's as easy as pressing a button!</h3>
+
+	<p>Choose an instrument</p>
+		<form>
+  			<input type="radio" id="piano" name="instrument" value="piano">
+  			<label for="piano">Piano</label><br>
+  			<input type="radio" id="guitar" name="instrument" value="guitar">
+  			<label for="guitar">Guitar</label><br>
+  			<input type="radio" id="saxophone" name="instrument" value="saxophone">
+  			<label for="saxophone">Saxophone</label>
+		</form>
+
+	<p>Set the tone</p>
+		<form>
+  			<input type="radio" id="joyful" name="tone" value="joyful">
+  			<label for="joyful">Yoyful</label><br>
+  			<input type="radio" id="sad" name="tone" value="sad">
+  			<label for="sad">Sad</label><br>
+  			<input type="radio" id="horror" name="tone" value="horror">
+  			<label for="horror">Horror</label>
+		</form> 
+
+	<p>Choose the duration</p>
+		<form>
+  			<input type="radio" id="30" name="duration" value="30">
+  			<label for="30">30 seconds(ringtone)</label><br>
+  			<input type="radio" id="120" name="duration" value="120">
+  			<label for="120">2 minutes(short)</label><br>
+  			<input type="radio" id="240" name="duration" value="240">
+  			<label for="240">4 minutes(normal)</label>
+		</form> 
+
+	<p>Set the tempo</p>
+		<form>
+  			<label for="bpm">Beats per minute(between 60-240):</label>
+  			<input type="number" id="bpm" name="bpm" min="60" max="240">
+		</form> 
+
+	<button type="button">Create</button>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</body>
+</html>
