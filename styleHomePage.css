@@ -1,0 +1,53 @@
+body{
+	background: linear-gradient(0deg, white, rgb(255, 204, 153));
+	animation-name: fadeIn;
+	animation-duration: 2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    padding-top: 100px;
+    opacity: 0.2;
+  }
+  100% {
+    padding-top: 0px;
+    opacity: 1;
+  }
+}
+
+h1 {
+	padding-top: 3%;
+}
+
+h3{
+	padding-top: 2%;
+}
+
+#grid-container {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 400px){
+	#grid-container{
+		grid-template-columns: 1fr 1fr;
+	}
+ }
+
+button {
+	width: 100px;
+	border-radius: 10px;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	opacity: 0.8;
+    transition: 0.3s;
+    background-color: #f4511e;
+}
+
+button:hover {
+	opacity: 1;
+}
+
+button:active {
+	transform: translateY(2px);
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="styleHomePage.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>Music Generator</title>
+</head>
+<body>
+<header>
+
+	<center><h1>Make your own music</h1></center>
+
+	<center><h3>It's as easy as pressing a button!</h3></center>
+
+</header>
+<main>
+	<div id="grid-container">
+	<div id="form1">
+	<center>
+	<p>Set the tone</p>
+		<form>
+  			<input type="radio" id="metal" name="tone" value="metal" required>
+  			<label for="metal">Metal</label><br>
+  			<input type="radio" id="country" name="tone" value="country" required>
+  			<label for="country">Country</label><br>
+  			<input type="radio" id="jazz" name="tone" value="jazz" required>
+  			<label for="jazz">Jazz</label><br>
+  			<input type="radio" id="blues" name="tone" value="blues" required>
+  			<label for="blues">Blues</label><br>
+		</form> 
+	</center>
+	</div>
+	<div id="form2">
+	<center>
+	<p>Choose the duration</p>
+		<form>
+  			<input type="radio" id="30" name="duration" value="30" required>
+  			<label for="30">30 seconds (ringtone)</label><br>
+  			<input type="radio" id="120" name="duration" value="120" required>
+  			<label for="120">2 minutes (short)</label><br>
+  			<input type="radio" id="240" name="duration" value="240" required>
+  			<label for="240">4 minutes (normal)</label>
+		</form>
+	</center>
+	</div>
+	</div>
+	<br>
+	<br>
+
+	<center><button type="button">Create</button></center>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+
+	<div id="graph"></div>
+
+</main>
+<footer>
+	<p id="footer">&copy Created by Christos Papaventsis</p>
+</footer>
+</body>
+</html>
