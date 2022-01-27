@@ -1,10 +1,4929 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="styleHomePage.css">
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<meta name="viewport" content="width=device-width, height=device-height" initial-scale=1.0> 
 	<title>Music Generator</title>
+		<script type="text/javascript">
+		//This script is able to create 5.376 permutations in which there are several thousands of nodes in order to create the first 16 seconds of a song
+		//GLOBAL VARIABLES
+		const notes = ['A', 'A_', 'B', 'C', 'C_', 'D', 'D_', 'E', 'F', 'F_', 'G', 'G_'];
+		let baseNote = notes[Math.floor ( Math.random() * notes.length)];
+		let pos = notes.indexOf(baseNote);
+		let tone;
+		let mode;
+		let chordProgression = [baseNote];
+		let chord1;
+		let chord2;
+		let chord3;
+		let chord4;
+		let chord5;
+		let chord6;
+		let chord7;
+		let p;
+		let a;
+		let b;
+		let c;
+		let x;
+
+		//NOTES
+		document.querySelectorAll("myaudio").preload = "auto";
+
+		const noteE0_2000 = new Audio('rockE0_2000.mp3');
+		const noteE0_1750 = new Audio('rockE0_1750.mp3');
+		const noteE0_1500 = new Audio('rockE0_1500.mp3');
+		const noteE0_1250 = new Audio('rockE0_1250.mp3');
+		const noteE0_1000 = new Audio('rockE0_1000.mp3');
+		const noteE0_750 = new Audio('rockE0_750.mp3');
+		const noteE0_500 = new Audio('rockE0_500.mp3');
+		const noteE0_250 = new Audio('rockE0_250.mp3');
+		const noteE1_2000 = new Audio('rockE1_2000.mp3');
+		const noteE1_1750 = new Audio('rockE1_1750.mp3');
+		const noteE1_1500 = new Audio('rockE1_1500.mp3');
+		const noteE1_1250 = new Audio('rockE1_1250.mp3');
+		const noteE1_1000 = new Audio('rockE1_1000.mp3');
+		const noteE1_750 = new Audio('rockE1_750.mp3');
+		const noteE1_500 = new Audio('rockE1_500.mp3');
+		const noteE1_250 = new Audio('rockE1_250.mp3');
+		const noteE2_2000 = new Audio('rockE2_2000.mp3');
+		const noteE2_1750 = new Audio('rockE2_1750.mp3');
+		const noteE2_1500 = new Audio('rockE2_1500.mp3');
+		const noteE2_1250 = new Audio('rockE2_1250.mp3');
+		const noteE2_1000 = new Audio('rockE2_1000.mp3');
+		const noteE2_750 = new Audio('rockE2_750.mp3');
+		const noteE2_500 = new Audio('rockE2_500.mp3');
+		const noteE2_250 = new Audio('rockE2_250.mp3');
+		const noteE3_2000 = new Audio('rockE3_2000.mp3');
+		const noteE3_1750 = new Audio('rockE3_1750.mp3');
+		const noteE3_1500 = new Audio('rockE3_1500.mp3');
+		const noteE3_1250 = new Audio('rockE3_1250.mp3');
+		const noteE3_1000 = new Audio('rockE3_1000.mp3');
+		const noteE3_750 = new Audio('rockE3_750.mp3');
+		const noteE3_500 = new Audio('rockE3_500.mp3');
+		const noteE3_250 = new Audio('rockE3_250.mp3');
+		const noteE4_2000 = new Audio('rockE4_2000.mp3');
+		const noteE4_1750 = new Audio('rockE4_1750.mp3');
+		const noteE4_1500 = new Audio('rockE4_1500.mp3');
+		const noteE4_1250 = new Audio('rockE4_1250.mp3');
+		const noteE4_1000 = new Audio('rockE4_1000.mp3');
+		const noteE4_750 = new Audio('rockE4_750.mp3');
+		const noteE4_500 = new Audio('rockE4_500.mp3');
+		const noteE4_250 = new Audio('rockE4_250.mp3');
+		const noteE5_2000 = new Audio('rockE5_2000.mp3');
+		const noteE5_1750 = new Audio('rockE5_1750.mp3');
+		const noteE5_1500 = new Audio('rockE5_1500.mp3');
+		const noteE5_1250 = new Audio('rockE5_1250.mp3');
+		const noteE5_1000 = new Audio('rockE5_1000.mp3');
+		const noteE5_750 = new Audio('rockE5_750.mp3');
+		const noteE5_500 = new Audio('rockE5_500.mp3');
+		const noteE5_250 = new Audio('rockE5_250.mp3');
+		const noteE6_2000 = new Audio('rockE6_2000.mp3');
+		const noteE6_1750 = new Audio('rockE6_1750.mp3');
+		const noteE6_1500 = new Audio('rockE6_1500.mp3');
+		const noteE6_1250 = new Audio('rockE6_1250.mp3');
+		const noteE6_1000 = new Audio('rockE6_1000.mp3');
+		const noteE6_750 = new Audio('rockE6_750.mp3');
+		const noteE6_500 = new Audio('rockE6_500.mp3');
+		const noteE6_250 = new Audio('rockE6_250.mp3');
+		const noteE7_2000 = new Audio('rockE7_2000.mp3');
+		const noteE7_1750 = new Audio('rockE7_1750.mp3');
+		const noteE7_1500 = new Audio('rockE7_1500.mp3');
+		const noteE7_1250 = new Audio('rockE7_1250.mp3');
+		const noteE7_1000 = new Audio('rockE7_1000.mp3');
+		const noteE7_750 = new Audio('rockE7_750.mp3');
+		const noteE7_500 = new Audio('rockE7_500.mp3');
+		const noteE7_250 = new Audio('rockE7_250.mp3');
+		const noteE8_2000 = new Audio('rockE8_2000.mp3');
+		const noteE8_1750 = new Audio('rockE8_1750.mp3');
+		const noteE8_1500 = new Audio('rockE8_1500.mp3');
+		const noteE8_1250 = new Audio('rockE8_1250.mp3');
+		const noteE8_1000 = new Audio('rockE8_1000.mp3');
+		const noteE8_750 = new Audio('rockE8_750.mp3');
+		const noteE8_500 = new Audio('rockE8_500.mp3');
+		const noteE8_250 = new Audio('rockE8_250.mp3');
+
+		const noteA0_2000 = new Audio('rockA0_2000.mp3');
+		const noteA0_1750 = new Audio('rockA0_1750.mp3');
+		const noteA0_1500 = new Audio('rockA0_1500.mp3');
+		const noteA0_1250 = new Audio('rockA0_1250.mp3');
+		const noteA0_1000 = new Audio('rockA0_1000.mp3');
+		const noteA0_750 = new Audio('rockA0_750.mp3');
+		const noteA0_500 = new Audio('rockA0_500.mp3');
+		const noteA0_250 = new Audio('rockA0_250.mp3');
+		const noteA1_2000 = new Audio('rockA1_2000.mp3');
+		const noteA1_1750 = new Audio('rockA1_1750.mp3');
+		const noteA1_1500 = new Audio('rockA1_1500.mp3');
+		const noteA1_1250 = new Audio('rockA1_1250.mp3');
+		const noteA1_1000 = new Audio('rockA1_1000.mp3');
+		const noteA1_750 = new Audio('rockA1_750.mp3');
+		const noteA1_500 = new Audio('rockA1_500.mp3');
+		const noteA1_250 = new Audio('rockA1_250.mp3');
+		const noteA2_2000 = new Audio('rockA2_2000.mp3');
+		const noteA2_1750 = new Audio('rockA2_1750.mp3');
+		const noteA2_1500 = new Audio('rockA2_1500.mp3');
+		const noteA2_1250 = new Audio('rockA2_1250.mp3');
+		const noteA2_1000 = new Audio('rockA2_1000.mp3');
+		const noteA2_750 = new Audio('rockA2_750.mp3');
+		const noteA2_500 = new Audio('rockA2_500.mp3');
+		const noteA2_250 = new Audio('rockA2_250.mp3');
+		const noteA3_2000 = new Audio('rockA3_2000.mp3');
+		const noteA3_1750 = new Audio('rockA3_1750.mp3');
+		const noteA3_1500 = new Audio('rockA3_1500.mp3');
+		const noteA3_1250 = new Audio('rockA3_1250.mp3');
+		const noteA3_1000 = new Audio('rockA3_1000.mp3');
+		const noteA3_750 = new Audio('rockA3_750.mp3');
+		const noteA3_500 = new Audio('rockA3_500.mp3');
+		const noteA3_250 = new Audio('rockA3_250.mp3');
+		const noteA4_2000 = new Audio('rockA4_2000.mp3');
+		const noteA4_1750 = new Audio('rockA4_1750.mp3');
+		const noteA4_1500 = new Audio('rockA4_1500.mp3');
+		const noteA4_1250 = new Audio('rockA4_1250.mp3');
+		const noteA4_1000 = new Audio('rockA4_1000.mp3');
+		const noteA4_750 = new Audio('rockA4_750.mp3');
+		const noteA4_500 = new Audio('rockA4_500.mp3');
+		const noteA4_250 = new Audio('rockA4_250.mp3');
+		const noteA5_2000 = new Audio('rockA5_2000.mp3');
+		const noteA5_1750 = new Audio('rockA5_1750.mp3');
+		const noteA5_1500 = new Audio('rockA5_1500.mp3');
+		const noteA5_1250 = new Audio('rockA5_1250.mp3');
+		const noteA5_1000 = new Audio('rockA5_1000.mp3');
+		const noteA5_750 = new Audio('rockA5_750.mp3');
+		const noteA5_500 = new Audio('rockA5_500.mp3');
+		const noteA5_250 = new Audio('rockA5_250.mp3');
+		const noteA6_2000 = new Audio('rockA6_2000.mp3');
+		const noteA6_1750 = new Audio('rockA6_1750.mp3');
+		const noteA6_1500 = new Audio('rockA6_1500.mp3');
+		const noteA6_1250 = new Audio('rockA6_1250.mp3');
+		const noteA6_1000 = new Audio('rockA6_1000.mp3');
+		const noteA6_750 = new Audio('rockA6_750.mp3');
+		const noteA6_500 = new Audio('rockA6_500.mp3');
+		const noteA6_250 = new Audio('rockA6_250.mp3');
+		const noteA7_2000 = new Audio('rockA7_2000.mp3');
+		const noteA7_1750 = new Audio('rockA7_1750.mp3');
+		const noteA7_1500 = new Audio('rockA7_1500.mp3');
+		const noteA7_1250 = new Audio('rockA7_1250.mp3');
+		const noteA7_1000 = new Audio('rockA7_1000.mp3');
+		const noteA7_750 = new Audio('rockA7_750.mp3');
+		const noteA7_500 = new Audio('rockA7_500.mp3');
+		const noteA7_250 = new Audio('rockA7_250.mp3');
+		const noteA8_2000 = new Audio('rockA8_2000.mp3');
+		const noteA8_1750 = new Audio('rockA8_1750.mp3');
+		const noteA8_1500 = new Audio('rockA8_1500.mp3');
+		const noteA8_1250 = new Audio('rockA8_1250.mp3');
+		const noteA8_1000 = new Audio('rockA8_1000.mp3');
+		const noteA8_750 = new Audio('rockA8_750.mp3');
+		const noteA8_500 = new Audio('rockA8_500.mp3');
+		const noteA8_250 = new Audio('rockA8_250.mp3');
+
+		const noteD0_2000 = new Audio('rockD0_2000.mp3');
+		const noteD0_1750 = new Audio('rockD0_1750.mp3');
+		const noteD0_1500 = new Audio('rockD0_1500.mp3');
+		const noteD0_1250 = new Audio('rockD0_1250.mp3');
+		const noteD0_1000 = new Audio('rockD0_1000.mp3');
+		const noteD0_750 = new Audio('rockD0_750.mp3');
+		const noteD0_500 = new Audio('rockD0_500.mp3');
+		const noteD0_250 = new Audio('rockD0_250.mp3');
+		const noteD1_2000 = new Audio('rockD1_2000.mp3');
+		const noteD1_1750 = new Audio('rockD1_1750.mp3');
+		const noteD1_1500 = new Audio('rockD1_1500.mp3');
+		const noteD1_1250 = new Audio('rockD1_1250.mp3');
+		const noteD1_1000 = new Audio('rockD1_1000.mp3');
+		const noteD1_750 = new Audio('rockD1_750.mp3');
+		const noteD1_500 = new Audio('rockD1_500.mp3');
+		const noteD1_250 = new Audio('rockD1_250.mp3');
+		const noteD2_2000 = new Audio('rockD2_2000.mp3');
+		const noteD2_1750 = new Audio('rockD2_1750.mp3');
+		const noteD2_1500 = new Audio('rockD2_1500.mp3');
+		const noteD2_1250 = new Audio('rockD2_1250.mp3');
+		const noteD2_1000 = new Audio('rockD2_1000.mp3');
+		const noteD2_750 = new Audio('rockD2_750.mp3');
+		const noteD2_500 = new Audio('rockD2_500.mp3');
+		const noteD2_250 = new Audio('rockD2_250.mp3');
+		const noteD3_2000 = new Audio('rockD3_2000.mp3');
+		const noteD3_1750 = new Audio('rockD3_1750.mp3');
+		const noteD3_1500 = new Audio('rockD3_1500.mp3');
+		const noteD3_1250 = new Audio('rockD3_1250.mp3');
+		const noteD3_1000 = new Audio('rockD3_1000.mp3');
+		const noteD3_750 = new Audio('rockD3_750.mp3');
+		const noteD3_500 = new Audio('rockD3_500.mp3');
+		const noteD3_250 = new Audio('rockD3_250.mp3');
+		const noteD4_2000 = new Audio('rockD4_2000.mp3');
+		const noteD4_1750 = new Audio('rockD4_1750.mp3');
+		const noteD4_1500 = new Audio('rockD4_1500.mp3');
+		const noteD4_1250 = new Audio('rockD4_1250.mp3');
+		const noteD4_1000 = new Audio('rockD4_1000.mp3');
+		const noteD4_750 = new Audio('rockD4_750.mp3');
+		const noteD4_500 = new Audio('rockD4_500.mp3');
+		const noteD4_250 = new Audio('rockD4_250.mp3');
+		const noteD5_2000 = new Audio('rockD5_2000.mp3');
+		const noteD5_1750 = new Audio('rockD5_1750.mp3');
+		const noteD5_1500 = new Audio('rockD5_1500.mp3');
+		const noteD5_1250 = new Audio('rockD5_1250.mp3');
+		const noteD5_1000 = new Audio('rockD5_1000.mp3');
+		const noteD5_750 = new Audio('rockD5_750.mp3');
+		const noteD5_500 = new Audio('rockD5_500.mp3');
+		const noteD5_250 = new Audio('rockD5_250.mp3');
+		const noteD6_2000 = new Audio('rockD6_2000.mp3');
+		const noteD6_1750 = new Audio('rockD6_1750.mp3');
+		const noteD6_1500 = new Audio('rockD6_1500.mp3');
+		const noteD6_1250 = new Audio('rockD6_1250.mp3');
+		const noteD6_1000 = new Audio('rockD6_1000.mp3');
+		const noteD6_750 = new Audio('rockD6_750.mp3');
+		const noteD6_500 = new Audio('rockD6_500.mp3');
+		const noteD6_250 = new Audio('rockD6_250.mp3');
+		const noteD7_2000 = new Audio('rockD7_2000.mp3');
+		const noteD7_1750 = new Audio('rockD7_1750.mp3');
+		const noteD7_1500 = new Audio('rockD7_1500.mp3');
+		const noteD7_1250 = new Audio('rockD7_1250.mp3');
+		const noteD7_1000 = new Audio('rockD7_1000.mp3');
+		const noteD7_750 = new Audio('rockD7_750.mp3');
+		const noteD7_500 = new Audio('rockD7_500.mp3');
+		const noteD7_250 = new Audio('rockD7_250.mp3');
+		const noteD8_2000 = new Audio('rockD8_2000.mp3');
+		const noteD8_1750 = new Audio('rockD8_1750.mp3');
+		const noteD8_1500 = new Audio('rockD8_1500.mp3');
+		const noteD8_1250 = new Audio('rockD8_1250.mp3');
+		const noteD8_1000 = new Audio('rockD8_1000.mp3');
+		const noteD8_750 = new Audio('rockD8_750.mp3');
+		const noteD8_500 = new Audio('rockD8_500.mp3');
+		const noteD8_250 = new Audio('rockD8_250.mp3');
+
+		const noteG0_2000 = new Audio('rockG0_2000.mp3');
+		const noteG0_1750 = new Audio('rockG0_1750.mp3');
+		const noteG0_1500 = new Audio('rockG0_1500.mp3');
+		const noteG0_1250 = new Audio('rockG0_1250.mp3');
+		const noteG0_1000 = new Audio('rockG0_1000.mp3');
+		const noteG0_750 = new Audio('rockG0_750.mp3');
+		const noteG0_500 = new Audio('rockG0_500.mp3');
+		const noteG0_250 = new Audio('rockG0_250.mp3');
+		const noteG1_2000 = new Audio('rockG1_2000.mp3');
+		const noteG1_1750 = new Audio('rockG1_1750.mp3');
+		const noteG1_1500 = new Audio('rockG1_1500.mp3');
+		const noteG1_1250 = new Audio('rockG1_1250.mp3');
+		const noteG1_1000 = new Audio('rockG1_1000.mp3');
+		const noteG1_750 = new Audio('rockG1_750.mp3');
+		const noteG1_500 = new Audio('rockG1_500.mp3');
+		const noteG1_250 = new Audio('rockG1_250.mp3');
+		const noteG2_2000 = new Audio('rockG2_2000.mp3');
+		const noteG2_1750 = new Audio('rockG2_1750.mp3');
+		const noteG2_1500 = new Audio('rockG2_1500.mp3');
+		const noteG2_1250 = new Audio('rockG2_1250.mp3');
+		const noteG2_1000 = new Audio('rockG2_1000.mp3');
+		const noteG2_750 = new Audio('rockG2_750.mp3');
+		const noteG2_500 = new Audio('rockG2_500.mp3');
+		const noteG2_250 = new Audio('rockG2_250.mp3');
+		const noteG3_2000 = new Audio('rockG3_2000.mp3');
+		const noteG3_1750 = new Audio('rockG3_1750.mp3');
+		const noteG3_1500 = new Audio('rockG3_1500.mp3');
+		const noteG3_1250 = new Audio('rockG3_1250.mp3');
+		const noteG3_1000 = new Audio('rockG3_1000.mp3');
+		const noteG3_750 = new Audio('rockG3_750.mp3');
+		const noteG3_500 = new Audio('rockG3_500.mp3');
+		const noteG3_250 = new Audio('rockG3_250.mp3');
+		const noteG4_2000 = new Audio('rockG4_2000.mp3');
+		const noteG4_1750 = new Audio('rockG4_1750.mp3');
+		const noteG4_1500 = new Audio('rockG4_1500.mp3');
+		const noteG4_1250 = new Audio('rockG4_1250.mp3');
+		const noteG4_1000 = new Audio('rockG4_1000.mp3');
+		const noteG4_750 = new Audio('rockG4_750.mp3');
+		const noteG4_500 = new Audio('rockG4_500.mp3');
+		const noteG4_250 = new Audio('rockG4_250.mp3');
+		const noteG5_2000 = new Audio('rockG5_2000.mp3');
+		const noteG5_1750 = new Audio('rockG5_1750.mp3');
+		const noteG5_1500 = new Audio('rockG5_1500.mp3');
+		const noteG5_1250 = new Audio('rockG5_1250.mp3');
+		const noteG5_1000 = new Audio('rockG5_1000.mp3');
+		const noteG5_750 = new Audio('rockG5_750.mp3');
+		const noteG5_500 = new Audio('rockG5_500.mp3');
+		const noteG5_250 = new Audio('rockG5_250.mp3');
+		const noteG6_2000 = new Audio('rockG6_2000.mp3');
+		const noteG6_1750 = new Audio('rockG6_1750.mp3');
+		const noteG6_1500 = new Audio('rockG6_1500.mp3');
+		const noteG6_1250 = new Audio('rockG6_1250.mp3');
+		const noteG6_1000 = new Audio('rockG6_1000.mp3');
+		const noteG6_750 = new Audio('rockG6_750.mp3');
+		const noteG6_500 = new Audio('rockG6_500.mp3');
+		const noteG6_250 = new Audio('rockG6_250.mp3');
+		const noteG7_2000 = new Audio('rockG7_2000.mp3');
+		const noteG7_1750 = new Audio('rockG7_1750.mp3');
+		const noteG7_1500 = new Audio('rockG7_1500.mp3');
+		const noteG7_1250 = new Audio('rockG7_1250.mp3');
+		const noteG7_1000 = new Audio('rockG7_1000.mp3');
+		const noteG7_750 = new Audio('rockG7_750.mp3');
+		const noteG7_500 = new Audio('rockG7_500.mp3');
+		const noteG7_250 = new Audio('rockG7_250.mp3');
+		const noteG8_2000 = new Audio('rockG8_2000.mp3');
+		const noteG8_1750 = new Audio('rockG8_1750.mp3');
+		const noteG8_1500 = new Audio('rockG8_1500.mp3');
+		const noteG8_1250 = new Audio('rockG8_1250.mp3');
+		const noteG8_1000 = new Audio('rockG8_1000.mp3');
+		const noteG8_750 = new Audio('rockG8_750.mp3');
+		const noteG8_500 = new Audio('rockG8_500.mp3');
+		const noteG8_250 = new Audio('rockG8_250.mp3');
+
+		const noteB0_2000 = new Audio('rockB0_2000.mp3');
+		const noteB0_1750 = new Audio('rockB0_1750.mp3');
+		const noteB0_1500 = new Audio('rockB0_1500.mp3');
+		const noteB0_1250 = new Audio('rockB0_1250.mp3');
+		const noteB0_1000 = new Audio('rockB0_1000.mp3');
+		const noteB0_750 = new Audio('rockB0_750.mp3');
+		const noteB0_500 = new Audio('rockB0_500.mp3');
+		const noteB0_250 = new Audio('rockB0_250.mp3');
+		const noteB1_2000 = new Audio('rockB1_2000.mp3');
+		const noteB1_1750 = new Audio('rockB1_1750.mp3');
+		const noteB1_1500 = new Audio('rockB1_1500.mp3');
+		const noteB1_1250 = new Audio('rockB1_1250.mp3');
+		const noteB1_1000 = new Audio('rockB1_1000.mp3');
+		const noteB1_750 = new Audio('rockB1_750.mp3');
+		const noteB1_500 = new Audio('rockB1_500.mp3');
+		const noteB1_250 = new Audio('rockB1_250.mp3');
+		const noteB2_2000 = new Audio('rockB2_2000.mp3');
+		const noteB2_1750 = new Audio('rockB2_1750.mp3');
+		const noteB2_1500 = new Audio('rockB2_1500.mp3');
+		const noteB2_1250 = new Audio('rockB2_1250.mp3');
+		const noteB2_1000 = new Audio('rockB2_1000.mp3');
+		const noteB2_750 = new Audio('rockB2_750.mp3');
+		const noteB2_500 = new Audio('rockB2_500.mp3');
+		const noteB2_250 = new Audio('rockB2_250.mp3');
+		const noteB3_2000 = new Audio('rockB3_2000.mp3');
+		const noteB3_1750 = new Audio('rockB3_1750.mp3');
+		const noteB3_1500 = new Audio('rockB3_1500.mp3');
+		const noteB3_1250 = new Audio('rockB3_1250.mp3');
+		const noteB3_1000 = new Audio('rockB3_1000.mp3');
+		const noteB3_750 = new Audio('rockB3_750.mp3');
+		const noteB3_500 = new Audio('rockB3_500.mp3');
+		const noteB3_250 = new Audio('rockB3_250.mp3');
+		const noteB4_2000 = new Audio('rockB4_2000.mp3');
+		const noteB4_1750 = new Audio('rockB4_1750.mp3');
+		const noteB4_1500 = new Audio('rockB4_1500.mp3');
+		const noteB4_1250 = new Audio('rockB4_1250.mp3');
+		const noteB4_1000 = new Audio('rockB4_1000.mp3');
+		const noteB4_750 = new Audio('rockB4_750.mp3');
+		const noteB4_500 = new Audio('rockB4_500.mp3');
+		const noteB4_250 = new Audio('rockB4_250.mp3');
+		const noteB5_2000 = new Audio('rockB5_2000.mp3');
+		const noteB5_1750 = new Audio('rockB5_1750.mp3');
+		const noteB5_1500 = new Audio('rockB5_1500.mp3');
+		const noteB5_1250 = new Audio('rockB5_1250.mp3');
+		const noteB5_1000 = new Audio('rockB5_1000.mp3');
+		const noteB5_750 = new Audio('rockB5_750.mp3');
+		const noteB5_500 = new Audio('rockB5_500.mp3');
+		const noteB5_250 = new Audio('rockB5_250.mp3');
+		const noteB6_2000 = new Audio('rockB6_2000.mp3');
+		const noteB6_1750 = new Audio('rockB6_1750.mp3');
+		const noteB6_1500 = new Audio('rockB6_1500.mp3');
+		const noteB6_1250 = new Audio('rockB6_1250.mp3');
+		const noteB6_1000 = new Audio('rockB6_1000.mp3');
+		const noteB6_750 = new Audio('rockB6_750.mp3');
+		const noteB6_500 = new Audio('rockB6_500.mp3');
+		const noteB6_250 = new Audio('rockB6_250.mp3');
+		const noteB7_2000 = new Audio('rockB7_2000.mp3');
+		const noteB7_1750 = new Audio('rockB7_1750.mp3');
+		const noteB7_1500 = new Audio('rockB7_1500.mp3');
+		const noteB7_1250 = new Audio('rockB7_1250.mp3');
+		const noteB7_1000 = new Audio('rockB7_1000.mp3');
+		const noteB7_750 = new Audio('rockB7_750.mp3');
+		const noteB7_500 = new Audio('rockB7_500.mp3');
+		const noteB7_250 = new Audio('rockE7_250.mp3');
+		const noteB8_2000 = new Audio('rockB8_2000.mp3');
+		const noteB8_1750 = new Audio('rockB8_1750.mp3');
+		const noteB8_1500 = new Audio('rockB8_1500.mp3');
+		const noteB8_1250 = new Audio('rockB8_1250.mp3');
+		const noteB8_1000 = new Audio('rockB8_1000.mp3');
+		const noteB8_750 = new Audio('rockB8_750.mp3');
+		const noteB8_500 = new Audio('rockB8_500.mp3');
+		const noteB8_250 = new Audio('rockB8_250.mp3');
+
+		const notee0_2000 = new Audio('rocke0_2000_.mp3');
+		const notee0_1750 = new Audio('rocke0_1750_.mp3');
+		const notee0_1500 = new Audio('rocke0_1500_.mp3');
+		const notee0_1250 = new Audio('rocke0_1250_.mp3');
+		const notee0_1000 = new Audio('rocke0_1000_.mp3');
+		const notee0_750 = new Audio('rocke0_750_.mp3');
+		const notee0_500 = new Audio('rocke0_500_.mp3');
+		const notee0_250 = new Audio('rocke0_250_.mp3');
+		const notee1_2000 = new Audio('rocke1_2000_.mp3');
+		const notee1_1750 = new Audio('rocke1_1750_.mp3');
+		const notee1_1500 = new Audio('rocke1_1500_.mp3');
+		const notee1_1250 = new Audio('rocke1_1250_.mp3');
+		const notee1_1000 = new Audio('rocke1_1000_.mp3');
+		const notee1_750 = new Audio('rocke1_750_.mp3');
+		const notee1_500 = new Audio('rocke1_500_.mp3');
+		const notee1_250 = new Audio('rocke1_250_.mp3');
+		const notee2_2000 = new Audio('rocke2_2000_.mp3');
+		const notee2_1750 = new Audio('rocke2_1750_.mp3');
+		const notee2_1500 = new Audio('rocke2_1500_.mp3');
+		const notee2_1250 = new Audio('rocke2_1250_.mp3');
+		const notee2_1000 = new Audio('rocke2_1000_.mp3');
+		const notee2_750 = new Audio('rocke2_750_.mp3');
+		const notee2_500 = new Audio('rocke2_500_.mp3');
+		const notee2_250 = new Audio('rocke2_250_.mp3');
+		const notee3_2000 = new Audio('rocke3_2000_.mp3');
+		const notee3_1750 = new Audio('rocke3_1750_.mp3');
+		const notee3_1500 = new Audio('rocke3_1500_.mp3');
+		const notee3_1250 = new Audio('rocke3_1250_.mp3');
+		const notee3_1000 = new Audio('rocke3_1000_.mp3');
+		const notee3_750 = new Audio('rocke3_750_.mp3');
+		const notee3_500 = new Audio('rocke3_500_.mp3');
+		const notee3_250 = new Audio('rocke3_250_.mp3');
+		const notee4_2000 = new Audio('rocke4_2000_.mp3');
+		const notee4_1750 = new Audio('rocke4_1750_.mp3');
+		const notee4_1500 = new Audio('rocke4_1500_.mp3');
+		const notee4_1250 = new Audio('rocke4_1250_.mp3');
+		const notee4_1000 = new Audio('rocke4_1000_.mp3');
+		const notee4_750 = new Audio('rocke4_750_.mp3');
+		const notee4_500 = new Audio('rocke4_500_.mp3');
+		const notee4_250 = new Audio('rocke4_250_.mp3');
+		const notee5_2000 = new Audio('rocke5_2000_.mp3');
+		const notee5_1750 = new Audio('rocke5_1750_.mp3');
+		const notee5_1500 = new Audio('rocke5_1500_.mp3');
+		const notee5_1250 = new Audio('rocke5_1250_.mp3');
+		const notee5_1000 = new Audio('rocke5_1000_.mp3');
+		const notee5_750 = new Audio('rocke5_750_.mp3');
+		const notee5_500 = new Audio('rocke5_500_.mp3');
+		const notee5_250 = new Audio('rocke5_250_.mp3');
+		const notee6_2000 = new Audio('rocke6_2000_.mp3');
+		const notee6_1750 = new Audio('rocke6_1750_.mp3');
+		const notee6_1500 = new Audio('rocke6_1500_.mp3');
+		const notee6_1250 = new Audio('rocke6_1250_.mp3');
+		const notee6_1000 = new Audio('rocke6_1000_.mp3');
+		const notee6_750 = new Audio('rocke6_750_.mp3');
+		const notee6_500 = new Audio('rocke6_500_.mp3');
+		const notee6_250 = new Audio('rocke6_250_.mp3');
+		const notee7_2000 = new Audio('rocke7_2000_.mp3');
+		const notee7_1750 = new Audio('rocke7_1750_.mp3');
+		const notee7_1500 = new Audio('rocke7_1500_.mp3');
+		const notee7_1250 = new Audio('rocke7_1250_.mp3');
+		const notee7_1000 = new Audio('rocke7_1000_.mp3');
+		const notee7_750 = new Audio('rocke7_750_.mp3');
+		const notee7_500 = new Audio('rocke7_500_.mp3');
+		const notee7_250 = new Audio('rocke7_250_.mp3');
+		const notee8_2000 = new Audio('rocke8_2000_.mp3');
+		const notee8_1750 = new Audio('rocke8_1750_.mp3');
+		const notee8_1500 = new Audio('rocke8_1500_.mp3');
+		const notee8_1250 = new Audio('rocke8_1250_.mp3');
+		const notee8_1000 = new Audio('rocke8_1000_.mp3');
+		const notee8_750 = new Audio('rocke8_750_.mp3');
+		const notee8_500 = new Audio('rocke8_500_.mp3');
+		const notee8_250 = new Audio('rocke8_250_.mp3');
+
+		//CHORDS
+		//major
+		const Amajor = {
+			key: "major",
+			playstring1_250: undefined,
+			playstring1_500: undefined,
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined, 
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA0_250.play();}, 
+			playstring2_500: function() {noteA0_500.play();}, 
+			playstring2_750: function() {noteA0_750.play();}, 
+			playstring2_1000: function() {noteA0_1000.play();}, 
+			playstring2_1250: function() {noteA0_1250.play();}, 
+			playstring2_1500: function() {noteA0_1500.play();},
+			playstring2_1750: function() {noteA0_1750.play();},
+			playstring2_2000: function() {noteA0_2000.play();}, 
+			playstring3_250: function() {noteD2_250.play();}, 
+			playstring3_500: function() {noteD2_500.play();}, 
+			playstring3_750: function() {noteD2_750.play();}, 
+			playstring3_1000: function() {noteD2_1000.play();}, 
+			playstring3_1250: function() {noteD2_1250.play();}, 
+			playstring3_1500: function() {noteD2_1500.play();},
+			playstring3_1750: function() {noteD2_1750.play();},
+			playstring3_2000: function() {noteD2_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: function() {noteB2_250.play();}, 
+			playstring5_500: function() {noteB2_500.play();}, 
+			playstring5_750: function() {noteB2_750.play();}, 
+			playstring5_1000: function() {noteB2_1000.play();}, 
+			playstring5_1250: function() {noteB2_1250.play();}, 
+			playstring5_1500: function() {noteB2_1500.play();},
+			playstring5_1750: function() {noteB2_1750.play();},
+			playstring5_2000: function() {noteB2_2000.play();}, 
+			playstring6_250: function() {notee0_250.play();}, 
+			playstring6_500: function() {notee0_500.play();}, 
+			playstring6_750: function() {notee0_750.play();}, 
+			playstring6_1000: function() {notee0_1000.play();}, 
+			playstring6_1250: function() {notee0_1250.play();}, 
+			playstring6_1500: function() {notee0_1500.play();},
+			playstring6_1750: function() {notee0_1750.play();},
+			playstring6_2000: function() {notee0_2000.play();}
+	    };
+		const A_major = {
+			key: "major",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined, 
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA1_250.play();}, 
+			playstring2_500: function() {noteA1_500.play();}, 
+			playstring2_750: function() {noteA1_750.play();}, 
+			playstring2_1000: function() {noteA1_1000.play();}, 
+			playstring2_1250: function() {noteA1_1250.play();}, 
+			playstring2_1500: function() {noteA1_1500.play();},
+			playstring2_1750: function() {noteA1_1750.play();},
+			playstring2_2000: function() {noteA1_2000.play();}, 
+			playstring3_250: function() {noteD3_250.play();}, 
+			playstring3_500: function() {noteD3_500.play();}, 
+			playstring3_750: function() {noteD3_750.play();}, 
+			playstring3_1000: function() {noteD3_1000.play();}, 
+			playstring3_1250: function() {noteD3_1250.play();}, 
+			playstring3_1500: function() {noteD3_1500.play();},
+			playstring3_1750: function() {noteD3_1750.play();},
+			playstring3_2000: function() {noteD3_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: function() {noteB3_250.play();}, 
+			playstring5_500: function() {noteB3_500.play();}, 
+			playstring5_750: function() {noteB3_750.play();}, 
+			playstring5_1000: function() {noteB3_1000.play();}, 
+			playstring5_1250: function() {noteB3_1250.play();}, 
+			playstring5_1500: function() {noteB3_1500.play();},
+			playstring5_1750: function() {noteB3_1750.play();},
+			playstring5_2000: function() {noteB3_2000.play();}, 
+			playstring6_250: function() {notee1_250.play();}, 
+			playstring6_500: function() {notee1_500.play();}, 
+			playstring6_750: function() {notee1_750.play();}, 
+			playstring6_1000: function() {notee1_1000.play();}, 
+			playstring6_1250: function() {notee1_1250.play();}, 
+			playstring6_1500: function() {notee1_1500.play();},
+			playstring6_1750: function() {notee1_1750.play();},
+			playstring6_2000: function() {notee1_2000.play();}
+		};
+		const Bmajor = {
+			key: "major",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined, 
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA2_250.play();}, 
+			playstring2_500: function() {noteA2_500.play();}, 
+			playstring2_750: function() {noteA2_750.play();}, 
+			playstring2_1000: function() {noteA2_1000.play();}, 
+			playstring2_1250: function() {noteA2_1250.play();}, 
+			playstring2_1500: function() {noteA2_1500.play();},
+			playstring2_1750: function() {noteA2_1750.play();},
+			playstring2_2000: function() {noteA2_2000.play();}, 
+			playstring3_250: function() {noteD4_250.play();}, 
+			playstring3_500: function() {noteD4_500.play();}, 
+			playstring3_750: function() {noteD4_750.play();}, 
+			playstring3_1000: function() {noteD4_1000.play();}, 
+			playstring3_1250: function() {noteD4_1250.play();}, 
+			playstring3_1500: function() {noteD4_1500.play();},
+			playstring3_1750: function() {noteD4_1750.play();},
+			playstring3_2000: function() {noteD4_2000.play();}, 
+			playstring4_250: function() {noteG4_250.play();}, 
+			playstring4_500: function() {noteG4_500.play();}, 
+			playstring4_750: function() {noteG4_750.play();}, 
+			playstring4_1000: function() {noteG4_1000.play();}, 
+			playstring4_1250: function() {noteG4_1250.play();}, 
+			playstring4_1500: function() {noteG4_1500.play();},
+			playstring4_1750: function() {noteG4_1750.play();},
+			playstring4_2000: function() {noteG4_2000.play();}, 
+			playstring5_250: function() {noteB4_250.play();}, 
+			playstring5_500: function() {noteB4_500.play();}, 
+			playstring5_750: function() {noteB4_750.play();}, 
+			playstring5_1000: function() {noteB4_1000.play();}, 
+			playstring5_1250: function() {noteB4_1250.play();}, 
+			playstring5_1500: function() {noteB4_1500.play();},
+			playstring5_1750: function() {noteB4_1750.play();},
+			playstring5_2000: function() {noteB4_2000.play();}, 
+			playstring6_250: function() {notee2_250.play();}, 
+			playstring6_500: function() {notee2_500.play();}, 
+			playstring6_750: function() {notee2_750.play();}, 
+			playstring6_1000: function() {notee2_1000.play();}, 
+			playstring6_1250: function() {notee2_1250.play();}, 
+			playstring6_1500: function() {notee2_1500.play();},
+			playstring6_1750: function() {notee2_1750.play();},
+			playstring6_2000: function() {notee2_2000.play();}
+		};
+		const Cmajor = {
+			key: "major",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined, 
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA3_250.play();}, 
+			playstring2_500: function() {noteA3_500.play();}, 
+			playstring2_750: function() {noteA3_750.play();}, 
+			playstring2_1000: function() {noteA3_1000.play();}, 
+			playstring2_1250: function() {noteA3_1250.play();}, 
+			playstring2_1500: function() {noteA3_1500.play();},
+			playstring2_1750: function() {noteA3_1750.play();},
+			playstring2_2000: function() {noteA3_2000.play();}, 
+			playstring3_250: function() {noteD2_250.play();}, 
+			playstring3_500: function() {noteD2_500.play();}, 
+			playstring3_750: function() {noteD2_750.play();}, 
+			playstring3_1000: function() {noteD2_1000.play();}, 
+			playstring3_1250: function() {noteD2_1250.play();}, 
+			playstring3_1500: function() {noteD2_1500.play();},
+			playstring3_1750: function() {noteD2_1750.play();},
+			playstring3_2000: function() {noteD2_2000.play();}, 
+			playstring4_250: function() {noteG0_250.play();}, 
+			playstring4_500: function() {noteG0_500.play();}, 
+			playstring4_750: function() {noteG0_750.play();}, 
+			playstring4_1000: function() {noteG0_1000.play();}, 
+			playstring4_1250: function() {noteG0_1250.play();}, 
+			playstring4_1500: function() {noteG0_1500.play();},
+			playstring4_1750: function() {noteG0_1750.play();},
+			playstring4_2000: function() {noteG0_2000.play();}, 
+			playstring5_250: function() {noteB1_250.play();}, 
+			playstring5_500: function() {noteB1_500.play();}, 
+			playstring5_750: function() {noteB1_750.play();}, 
+			playstring5_1000: function() {noteB1_1000.play();}, 
+			playstring5_1250: function() {noteB1_1250.play();}, 
+			playstring5_1500: function() {noteB1_1500.play();},
+			playstring5_1750: function() {noteB1_1750.play();},
+			playstring5_2000: function() {noteB1_2000.play();}, 
+			playstring6_250: function() {notee0_250.play();}, 
+			playstring6_500: function() {notee0_500.play();}, 
+			playstring6_750: function() {notee0_750.play();}, 
+			playstring6_1000: function() {notee0_1000.play();}, 
+			playstring6_1250: function() {notee0_1250.play();}, 
+			playstring6_1500: function() {notee0_1500.play();},
+			playstring6_1750: function() {notee0_1750.play();},
+			playstring6_2000: function() {notee0_2000.play();}
+		};
+		const C_major = {
+			key: "major",
+			playstring1_250: undefined,
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA4_250.play();}, 
+			playstring2_500: function() {noteA4_500.play();}, 
+			playstring2_750: function() {noteA4_750.play();}, 
+			playstring2_1000: function() {noteA4_1000.play();}, 
+			playstring2_1250: function() {noteA4_1250.play();}, 
+			playstring2_1500: function() {noteA4_1500.play();},
+			playstring2_1750: function() {noteA4_1750.play();},
+			playstring2_2000: function() {noteA4_2000.play();}, 
+			playstring3_250: function() {noteD3_250.play();}, 
+			playstring3_500: function() {noteD3_500.play();}, 
+			playstring3_750: function() {noteD3_750.play();}, 
+			playstring3_1000: function() {noteD3_1000.play();}, 
+			playstring3_1250: function() {noteD3_1250.play();}, 
+			playstring3_1500: function() {noteD3_1500.play();},
+			playstring3_1750: function() {noteD3_1750.play();},
+			playstring3_2000: function() {noteD3_2000.play();}, 
+			playstring4_250: function() {noteG1_250.play();}, 
+			playstring4_500: function() {noteG1_500.play();}, 
+			playstring4_750: function() {noteG1_750.play();}, 
+			playstring4_1000: function() {noteG1_1000.play();}, 
+			playstring4_1250: function() {noteG1_1250.play();}, 
+			playstring4_1500: function() {noteG1_1500.play();},
+			playstring4_1750: function() {noteG1_1750.play();},
+			playstring4_2000: function() {noteG1_2000.play();}, 
+			playstring5_250: function() {noteB2_250.play();}, 
+			playstring5_500: function() {noteB2_500.play();}, 
+			playstring5_750: function() {noteB2_750.play();}, 
+			playstring5_1000: function() {noteB2_1000.play();}, 
+			playstring5_1250: function() {noteB2_1250.play();}, 
+			playstring5_1500: function() {noteB2_1500.play();},
+			playstring5_1750: function() {noteB2_1750.play();},
+			playstring5_2000: function() {noteB2_2000.play();}, 
+			playstring6_250: function() {notee1_250.play();}, 
+			playstring6_500: function() {notee1_500.play();}, 
+			playstring6_750: function() {notee1_750.play();}, 
+			playstring6_1000: function() {notee1_1000.play();}, 
+			playstring6_1250: function() {notee1_1250.play();}, 
+			playstring6_1500: function() {notee1_1500.play();},
+			playstring6_1750: function() {notee1_1750.play();},
+			playstring6_2000: function() {notee1_2000.play();}
+		};
+		const Dmajor = {
+			key: "major",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined,
+			playstring1_2000: undefined,   
+			playstring2_250: undefined, 
+			playstring2_500: undefined,
+			playstring2_750: undefined,  
+			playstring2_1000: undefined, 
+			playstring2_1250: undefined, 
+			playstring2_1500: undefined, 
+			playstring2_1750: undefined, 
+			playstring2_2000: undefined, 
+			playstring3_250: function() {noteD0_250.play();}, 
+			playstring3_500: function() {noteD0_500.play();}, 
+			playstring3_750: function() {noteD0_750.play();}, 
+			playstring3_1000: function() {noteD0_1000.play();}, 
+			playstring3_1250: function() {noteD0_1250.play();}, 
+			playstring3_1500: function() {noteD0_1500.play();},
+			playstring3_1750: function() {noteD0_1750.play();},
+			playstring3_2000: function() {noteD0_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: function() {noteB3_250.play();}, 
+			playstring5_500: function() {noteB3_500.play();}, 
+			playstring5_750: function() {noteB3_750.play();}, 
+			playstring5_1000: function() {noteB3_1000.play();}, 
+			playstring5_1250: function() {noteB3_1250.play();}, 
+			playstring5_1500: function() {noteB3_1500.play();},
+			playstring5_1750: function() {noteB3_1750.play();},
+			playstring5_2000: function() {noteB3_2000.play();}, 
+			playstring6_250: function() {notee2_250.play();}, 
+			playstring6_500: function() {notee2_500.play();}, 
+			playstring6_750: function() {notee2_750.play();}, 
+			playstring6_1000: function() {notee2_1000.play();}, 
+			playstring6_1250: function() {notee2_1250.play();}, 
+			playstring6_1500: function() {notee2_1500.play();},
+			playstring6_1750: function() {notee2_1750.play();},
+			playstring6_2000: function() {notee2_2000.play();}
+		};
+		const D_major = {
+			key: "major",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined, 
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: undefined, 
+			playstring2_500: undefined, 
+			playstring2_750: undefined, 
+			playstring2_1000: undefined, 
+			playstring2_1250: undefined, 
+			playstring2_1500: undefined, 
+			playstring2_1750: undefined, 
+			playstring2_2000: undefined, 
+			playstring3_250: function() {noteD1_250.play();}, 
+			playstring3_500: function() {noteD1_500.play();}, 
+			playstring3_750: function() {noteD1_750.play();}, 
+			playstring3_1000: function() {noteD1_1000.play();}, 
+			playstring3_1250: function() {noteD1_1250.play();}, 
+			playstring3_1500: function() {noteD1_1500.play();},
+			playstring3_1750: function() {noteD1_1750.play();},
+			playstring3_2000: function() {noteD1_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: function() {noteB4_250.play();}, 
+			playstring5_500: function() {noteB4_500.play();}, 
+			playstring5_750: function() {noteB4_750.play();}, 
+			playstring5_1000: function() {noteB4_1000.play();}, 
+			playstring5_1250: function() {noteB4_1250.play();}, 
+			playstring5_1500: function() {noteB4_1500.play();},
+			playstring5_1750: function() {noteB4_1750.play();},
+			playstring5_2000: function() {noteB4_2000.play();}, 
+			playstring6_250: function() {notee3_250.play();}, 
+			playstring6_500: function() {notee3_500.play();}, 
+			playstring6_750: function() {notee3_750.play();}, 
+			playstring6_1000: function() {notee3_1000.play();}, 
+			playstring6_1250: function() {notee3_1250.play();}, 
+			playstring6_1500: function() {notee3_1500.play();},
+			playstring6_1750: function() {notee3_1750.play();},
+			playstring6_2000: function() {notee3_2000.play();}
+		};
+		const Emajor = {
+			key: "major",
+			playstring1_250: function() {noteE0_250.play();}, 
+			playstring1_500: function() {noteE0_500.play();}, 
+			playstring1_750: function() {noteE0_750.play();}, 
+			playstring1_1000: function() {noteE0_1000.play();}, 
+			playstring1_1250: function() {noteE0_1250.play();}, 
+			playstring1_1500: function() {noteE0_1500.play();},
+			playstring1_1750: function() {noteE0_1750.play();},
+			playstring1_2000: function() {noteE0_2000.play();}, 
+			playstring2_250: function() {noteA2_250.play();}, 
+			playstring2_500: function() {noteA2_500.play();}, 
+			playstring2_750: function() {noteA2_750.play();}, 
+			playstring2_1000: function() {noteA2_1000.play();}, 
+			playstring2_1250: function() {noteA2_1250.play();}, 
+			playstring2_1500: function() {noteA2_1500.play();},
+			playstring2_1750: function() {noteA2_1750.play();},
+			playstring2_2000: function() {noteA2_2000.play();}, 
+			playstring3_250: function() {noteD2_250.play();}, 
+			playstring3_500: function() {noteD2_500.play();}, 
+			playstring3_750: function() {noteD2_750.play();}, 
+			playstring3_1000: function() {noteD2_1000.play();}, 
+			playstring3_1250: function() {noteD2_1250.play();}, 
+			playstring3_1500: function() {noteD2_1500.play();},
+			playstring3_1750: function() {noteD2_1750.play();},
+			playstring3_2000: function() {noteD2_2000.play();}, 
+			playstring4_250: function() {noteG1_250.play();}, 
+			playstring4_500: function() {noteG1_500.play();}, 
+			playstring4_750: function() {noteG1_750.play();}, 
+			playstring4_1000: function() {noteG1_1000.play();}, 
+			playstring4_1250: function() {noteG1_1250.play();}, 
+			playstring4_1500: function() {noteG1_1500.play();},
+			playstring4_1750: function() {noteG1_1750.play();},
+			playstring4_2000: function() {noteG1_2000.play();}, 
+			playstring5_250: function() {noteB0_250.play();}, 
+			playstring5_500: function() {noteB0_500.play();}, 
+			playstring5_750: function() {noteB0_750.play();}, 
+			playstring5_1000: function() {noteB0_1000.play();}, 
+			playstring5_1250: function() {noteB0_1250.play();}, 
+			playstring5_1500: function() {noteB0_1500.play();},
+			playstring5_1750: function() {noteB0_1750.play();},
+			playstring5_2000: function() {noteB0_2000.play();}, 
+			playstring6_250: function() {notee0_250.play();}, 
+			playstring6_500: function() {notee0_500.play();}, 
+			playstring6_750: function() {notee0_750.play();}, 
+			playstring6_1000: function() {notee0_1000.play();}, 
+			playstring6_1250: function() {notee0_1250.play();}, 
+			playstring6_1500: function() {notee0_1500.play();},
+			playstring6_1750: function() {notee0_1750.play();},
+			playstring6_2000: function() {notee0_2000.play();}
+		};
+		const Fmajor = {
+			key: "major",
+			playstring1_250: function() {noteE1_250.play();}, 
+			playstring1_500: function() {noteE1_500.play();}, 
+			playstring1_750: function() {noteE1_750.play();}, 
+			playstring1_1000: function() {noteE1_1000.play();}, 
+			playstring1_1250: function() {noteE1_1250.play();}, 
+			playstring1_1500: function() {noteE1_1500.play();},
+			playstring1_1750: function() {noteE1_1750.play();},
+			playstring1_2000: function() {noteE1_2000.play();}, 
+			playstring2_250: function() {noteA3_250.play();}, 
+			playstring2_500: function() {noteA3_500.play();}, 
+			playstring2_750: function() {noteA3_750.play();}, 
+			playstring2_1000: function() {noteA3_1000.play();}, 
+			playstring2_1250: function() {noteA3_1250.play();}, 
+			playstring2_1500: function() {noteA3_1500.play();},
+			playstring2_1750: function() {noteA3_1750.play();},
+			playstring2_2000: function() {noteA3_2000.play();}, 
+			playstring3_250: function() {noteD3_250.play();}, 
+			playstring3_500: function() {noteD3_500.play();}, 
+			playstring3_750: function() {noteD3_750.play();}, 
+			playstring3_1000: function() {noteD3_1000.play();}, 
+			playstring3_1250: function() {noteD3_1250.play();}, 
+			playstring3_1500: function() {noteD3_1500.play();},
+			playstring3_1750: function() {noteD3_1750.play();},
+			playstring3_2000: function() {noteD3_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: function() {noteB1_250.play();}, 
+			playstring5_500: function() {noteB1_500.play();}, 
+			playstring5_750: function() {noteB1_750.play();}, 
+			playstring5_1000: function() {noteB1_1000.play();}, 
+			playstring5_1250: function() {noteB1_1250.play();}, 
+			playstring5_1500: function() {noteB1_1500.play();},
+			playstring5_1750: function() {noteB1_1750.play();},
+			playstring5_2000: function() {noteB1_2000.play();}, 
+			playstring6_250: function() {notee1_250.play();}, 
+			playstring6_500: function() {notee1_500.play();}, 
+			playstring6_750: function() {notee1_750.play();}, 
+			playstring6_1000: function() {notee1_1000.play();}, 
+			playstring6_1250: function() {notee1_1250.play();}, 
+			playstring6_1500: function() {notee1_1500.play();},
+			playstring6_1750: function() {notee1_1750.play();},
+			playstring6_2000: function() {notee1_2000.play();}
+		};
+		const F_major = {
+			key: "major",
+			playstring1_250: function() {noteE2_250.play();}, 
+			playstring1_500: function() {noteE2_500.play();}, 
+			playstring1_750: function() {noteE2_750.play();}, 
+			playstring1_1000: function() {noteE2_1000.play();}, 
+			playstring1_1250: function() {noteE2_1250.play();}, 
+			playstring1_1500: function() {noteE2_1500.play();},
+			playstring1_1750: function() {noteE2_1750.play();},
+			playstring1_2000: function() {noteE2_2000.play();}, 
+			playstring2_250: function() {noteA4_250.play();}, 
+			playstring2_500: function() {noteA4_500.play();}, 
+			playstring2_750: function() {noteA4_750.play();}, 
+			playstring2_1000: function() {noteA4_1000.play();}, 
+			playstring2_1250: function() {noteA4_1250.play();}, 
+			playstring2_1500: function() {noteA4_1500.play();},
+			playstring2_1750: function() {noteA4_1750.play();},
+			playstring2_2000: function() {noteA4_2000.play();}, 
+			playstring3_250: function() {noteD4_250.play();}, 
+			playstring3_500: function() {noteD4_500.play();}, 
+			playstring3_750: function() {noteD4_750.play();}, 
+			playstring3_1000: function() {noteD4_1000.play();}, 
+			playstring3_1250: function() {noteD4_1250.play();}, 
+			playstring3_1500: function() {noteD4_1500.play();},
+			playstring3_1750: function() {noteD4_1750.play();},
+			playstring3_2000: function() {noteD4_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: function() {noteB2_250.play();}, 
+			playstring5_500: function() {noteB2_500.play();}, 
+			playstring5_750: function() {noteB2_750.play();}, 
+			playstring5_1000: function() {noteB2_1000.play();}, 
+			playstring5_1250: function() {noteB2_1250.play();}, 
+			playstring5_1500: function() {noteB2_1500.play();},
+			playstring5_1750: function() {noteB2_1750.play();},
+			playstring5_2000: function() {noteB2_2000.play();}, 
+			playstring6_250: function() {notee2_250.play();}, 
+			playstring6_500: function() {notee2_500.play();}, 
+			playstring6_750: function() {notee2_750.play();}, 
+			playstring6_1000: function() {notee2_1000.play();}, 
+			playstring6_1250: function() {notee2_1250.play();}, 
+			playstring6_1500: function() {notee2_1500.play();},
+			playstring6_1750: function() {notee2_1750.play();},
+			playstring6_2000: function() {notee2_2000.play();}
+		};
+		const Gmajor = {
+			key: "major",
+			playstring1_250: function() {noteE3_250.play();}, 
+			playstring1_500: function() {noteE3_500.play();}, 
+			playstring1_750: function() {noteE3_750.play();}, 
+			playstring1_1000: function() {noteE3_1000.play();}, 
+			playstring1_1250: function() {noteE3_1250.play();}, 
+			playstring1_1500: function() {noteE3_1500.play();},
+			playstring1_1750: function() {noteE3_1750.play();},
+			playstring1_2000: function() {noteE3_2000.play();}, 
+			playstring2_250: function() {noteA2_250.play();}, 
+			playstring2_500: function() {noteA2_500.play();}, 
+			playstring2_750: function() {noteA2_750.play();}, 
+			playstring2_1000: function() {noteA2_1000.play();}, 
+			playstring2_1250: function() {noteA2_1250.play();}, 
+			playstring2_1500: function() {noteA2_1500.play();},
+			playstring2_1750: function() {noteA2_1750.play();},
+			playstring2_2000: function() {noteA2_2000.play();}, 
+			playstring3_250: function() {noteD0_250.play();}, 
+			playstring3_500: function() {noteD0_500.play();}, 
+			playstring3_750: function() {noteD0_750.play();}, 
+			playstring3_1000: function() {noteD0_1000.play();}, 
+			playstring3_1250: function() {noteD0_1250.play();}, 
+			playstring3_1500: function() {noteD0_1500.play();},
+			playstring3_1750: function() {noteD0_1750.play();},
+			playstring3_2000: function() {noteD0_2000.play();}, 
+			playstring4_250: function() {noteG0_250.play();}, 
+			playstring4_500: function() {noteG0_500.play();}, 
+			playstring4_750: function() {noteG0_750.play();}, 
+			playstring4_1000: function() {noteG0_1000.play();}, 
+			playstring4_1250: function() {noteG0_1250.play();}, 
+			playstring4_1500: function() {noteG0_1500.play();},
+			playstring4_1750: function() {noteG0_1750.play();},
+			playstring4_2000: function() {noteG0_2000.play();}, 
+			playstring5_250: function() {noteB0_250.play();}, 
+			playstring5_500: function() {noteB0_500.play();}, 
+			playstring5_750: function() {noteB0_750.play();}, 
+			playstring5_1000: function() {noteB0_1000.play();}, 
+			playstring5_1250: function() {noteB0_1250.play();}, 
+			playstring5_1500: function() {noteB0_1500.play();},
+			playstring5_1750: function() {noteB0_1750.play();},
+			playstring5_2000: function() {noteB0_2000.play();}, 
+			playstring6_250: function() {notee3_250.play();}, 
+			playstring6_500: function() {notee3_500.play();}, 
+			playstring6_750: function() {notee3_750.play();}, 
+			playstring6_1000: function() {notee3_1000.play();}, 
+			playstring6_1250: function() {notee3_1250.play();}, 
+			playstring6_1500: function() {notee3_1500.play();},
+			playstring6_1750: function() {notee3_1750.play();},
+			playstring6_2000: function() {notee3_2000.play();}
+		};
+		const G_major = {
+			key: "major",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined, 
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: undefined, 
+			playstring2_500: undefined, 
+			playstring2_750: undefined, 
+			playstring2_1000: undefined, 
+			playstring2_1250: undefined, 
+			playstring2_1500: undefined, 
+			playstring2_1750: undefined, 
+			playstring2_2000: undefined, 
+			playstring3_250: function() {noteD1_250.play();}, 
+			playstring3_500: function() {noteD1_500.play();}, 
+			playstring3_750: function() {noteD1_750.play();}, 
+			playstring3_1000: function() {noteD1_1000.play();}, 
+			playstring3_1250: function() {noteD1_1250.play();}, 
+			playstring3_1500: function() {noteD1_1500.play();},
+			playstring3_1750: function() {noteD1_1750.play();},
+			playstring3_2000: function() {noteD1_2000.play();}, 
+			playstring4_250: function() {noteG1_250.play();}, 
+			playstring4_500: function() {noteG1_500.play();}, 
+			playstring4_750: function() {noteG1_750.play();}, 
+			playstring4_1000: function() {noteG1_1000.play();}, 
+			playstring4_1250: function() {noteG1_1250.play();}, 
+			playstring4_1500: function() {noteG1_1500.play();},
+			playstring4_1750: function() {noteG1_1750.play();},
+			playstring4_2000: function() {noteG1_2000.play();}, 
+			playstring5_250: function() {noteB1_250.play();}, 
+			playstring5_500: function() {noteB1_500.play();}, 
+			playstring5_750: function() {noteB1_750.play();}, 
+			playstring5_1000: function() {noteB1_1000.play();}, 
+			playstring5_1250: function() {noteB1_1250.play();}, 
+			playstring5_1500: function() {noteB1_1500.play();},
+			playstring5_1750: function() {noteB1_1750.play();},
+			playstring5_2000: function() {noteB1_2000.play();}, 
+			playstring6_250: function() {notee4_250.play();}, 
+			playstring6_500: function() {notee4_500.play();}, 
+			playstring6_750: function() {notee4_750.play();}, 
+			playstring6_1000: function() {notee4_1000.play();}, 
+			playstring6_1250: function() {notee4_1250.play();}, 
+			playstring6_1500: function() {notee4_1500.play();},
+			playstring6_1750: function() {notee4_1750.play();},
+			playstring6_2000: function() {notee4_2000.play();}
+		};
+		//minor
+		const Aminor = {
+			key: "minor",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA0_250.play();}, 
+			playstring2_500: function() {noteA0_500.play();}, 
+			playstring2_750: function() {noteA0_750.play();}, 
+			playstring2_1000: function() {noteA0_1000.play();}, 
+			playstring2_1250: function() {noteA0_1250.play();}, 
+			playstring2_1500: function() {noteA0_1500.play();},
+			playstring2_1750: function() {noteA0_1750.play();},
+			playstring2_2000: function() {noteA0_2000.play();}, 
+			playstring3_250: function() {noteD2_250.play();}, 
+			playstring3_500: function() {noteD2_500.play();}, 
+			playstring3_750: function() {noteD2_750.play();}, 
+			playstring3_1000: function() {noteD2_1000.play();}, 
+			playstring3_1250: function() {noteD2_1250.play();}, 
+			playstring3_1500: function() {noteD2_1500.play();},
+			playstring3_1750: function() {noteD2_1750.play();},
+			playstring3_2000: function() {noteD2_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: function() {noteB1_250.play();}, 
+			playstring5_500: function() {noteB1_500.play();}, 
+			playstring5_750: function() {noteB1_750.play();}, 
+			playstring5_1000: function() {noteB1_1000.play();}, 
+			playstring5_1250: function() {noteB1_1250.play();}, 
+			playstring5_1500: function() {noteB1_1500.play();},
+			playstring5_1750: function() {noteB1_1750.play();},
+			playstring5_2000: function() {noteB1_2000.play();}, 
+			playstring6_250: function() {notee0_250.play();}, 
+			playstring6_500: function() {notee0_500.play();}, 
+			playstring6_750: function() {notee0_750.play();}, 
+			playstring6_1000: function() {notee0_1000.play();}, 
+			playstring6_1250: function() {notee0_1250.play();}, 
+			playstring6_1500: function() {notee0_1500.play();},
+			playstring6_1750: function() {notee0_1750.play();},
+			playstring6_2000: function() {notee0_2000.play();}
+		};
+		const A_minor = {
+			key: "minor",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA1_250.play();}, 
+			playstring2_500: function() {noteA1_500.play();}, 
+			playstring2_750: function() {noteA1_750.play();}, 
+			playstring2_1000: function() {noteA1_1000.play();}, 
+			playstring2_1250: function() {noteA1_1250.play();}, 
+			playstring2_1500: function() {noteA1_1500.play();},
+			playstring2_1750: function() {noteA1_1750.play();},
+			playstring2_2000: function() {noteA1_2000.play();}, 
+			playstring3_250: function() {noteD3_250.play();}, 
+			playstring3_500: function() {noteD3_500.play();}, 
+			playstring3_750: function() {noteD3_750.play();}, 
+			playstring3_1000: function() {noteD3_1000.play();}, 
+			playstring3_1250: function() {noteD3_1250.play();}, 
+			playstring3_1500: function() {noteD3_1500.play();},
+			playstring3_1750: function() {noteD3_1750.play();},
+			playstring3_2000: function() {noteD3_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: function() {noteB2_250.play();}, 
+			playstring5_500: function() {noteB2_500.play();}, 
+			playstring5_750: function() {noteB2_750.play();}, 
+			playstring5_1000: function() {noteB2_1000.play();}, 
+			playstring5_1250: function() {noteB2_1250.play();}, 
+			playstring5_1500: function() {noteB2_1500.play();},
+			playstring5_1750: function() {noteB2_1750.play();},
+			playstring5_2000: function() {noteB2_2000.play();}, 
+			playstring6_250: function() {notee1_250.play();}, 
+			playstring6_500: function() {notee1_500.play();}, 
+			playstring6_750: function() {notee1_750.play();}, 
+			playstring6_1000: function() {notee1_1000.play();}, 
+			playstring6_1250: function() {notee1_1250.play();}, 
+			playstring6_1500: function() {notee1_1500.play();},
+			playstring6_1750: function() {notee1_1750.play();},
+			playstring6_2000: function() {notee1_2000.play();}
+		};
+		const Bminor = {
+			key: "minor",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA2_250.play();}, 
+			playstring2_500: function() {noteA2_500.play();}, 
+			playstring2_750: function() {noteA2_750.play();}, 
+			playstring2_1000: function() {noteA2_1000.play();}, 
+			playstring2_1250: function() {noteA2_1250.play();}, 
+			playstring2_1500: function() {noteA2_1500.play();},
+			playstring2_1750: function() {noteA2_1750.play();},
+			playstring2_2000: function() {noteA2_2000.play();}, 
+			playstring3_250: function() {noteD4_250.play();}, 
+			playstring3_500: function() {noteD4_500.play();}, 
+			playstring3_750: function() {noteD4_750.play();}, 
+			playstring3_1000: function() {noteD4_1000.play();}, 
+			playstring3_1250: function() {noteD4_1250.play();}, 
+			playstring3_1500: function() {noteD4_1500.play();},
+			playstring3_1750: function() {noteD4_1750.play();},
+			playstring3_2000: function() {noteD4_2000.play();}, 
+			playstring4_250: function() {noteG4_250.play();}, 
+			playstring4_500: function() {noteG4_500.play();}, 
+			playstring4_750: function() {noteG4_750.play();}, 
+			playstring4_1000: function() {noteG4_1000.play();}, 
+			playstring4_1250: function() {noteG4_1250.play();}, 
+			playstring4_1500: function() {noteG4_1500.play();},
+			playstring4_1750: function() {noteG4_1750.play();},
+			playstring4_2000: function() {noteG4_2000.play();}, 
+			playstring5_250: function() {noteB3_250.play();}, 
+			playstring5_500: function() {noteB3_500.play();}, 
+			playstring5_750: function() {noteB3_750.play();}, 
+			playstring5_1000: function() {noteB3_1000.play();}, 
+			playstring5_1250: function() {noteB3_1250.play();}, 
+			playstring5_1500: function() {noteB3_1500.play();},
+			playstring5_1750: function() {noteB3_1750.play();},
+			playstring5_2000: function() {noteB3_2000.play();}, 
+			playstring6_250: function() {notee2_250.play();}, 
+			playstring6_500: function() {notee2_500.play();}, 
+			playstring6_750: function() {notee2_750.play();}, 
+			playstring6_1000: function() {notee2_1000.play();}, 
+			playstring6_1250: function() {notee2_1250.play();}, 
+			playstring6_1500: function() {notee2_1500.play();},
+			playstring6_1750: function() {notee2_1750.play();},
+			playstring6_2000: function() {notee2_2000.play();}
+		};
+		const Cminor = {
+			key: "minor",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA3_250.play();}, 
+			playstring2_500: function() {noteA3_500.play();}, 
+			playstring2_750: function() {noteA3_750.play();}, 
+			playstring2_1000: function() {noteA3_1000.play();}, 
+			playstring2_1250: function() {noteA3_1250.play();}, 
+			playstring2_1500: function() {noteA3_1500.play();},
+			playstring2_1750: function() {noteA3_1750.play();},
+			playstring2_2000: function() {noteA3_2000.play();}, 
+			playstring3_250: function() {noteD1_250.play();}, 
+			playstring3_500: function() {noteD1_500.play();}, 
+			playstring3_750: function() {noteD1_750.play();}, 
+			playstring3_1000: function() {noteD1_1000.play();}, 
+			playstring3_1250: function() {noteD1_1250.play();}, 
+			playstring3_1500: function() {noteD1_1500.play();},
+			playstring3_1750: function() {noteD1_1750.play();},
+			playstring3_2000: function() {noteD1_2000.play();}, 
+			playstring4_250: function() {noteG0_250.play();}, 
+			playstring4_500: function() {noteG0_500.play();}, 
+			playstring4_750: function() {noteG0_750.play();}, 
+			playstring4_1000: function() {noteG0_1000.play();}, 
+			playstring4_1250: function() {noteG0_1250.play();}, 
+			playstring4_1500: function() {noteG0_1500.play();},
+			playstring4_1750: function() {noteG0_1750.play();},
+			playstring4_2000: function() {noteG0_2000.play();}, 
+			playstring5_250: function() {noteB1_250.play();}, 
+			playstring5_500: function() {noteB1_500.play();}, 
+			playstring5_750: function() {noteB1_750.play();}, 
+			playstring5_1000: function() {noteB1_1000.play();}, 
+			playstring5_1250: function() {noteB1_1250.play();}, 
+			playstring5_1500: function() {noteB1_1500.play();},
+			playstring5_1750: function() {noteB1_1750.play();},
+			playstring5_2000: function() {noteB1_2000.play();}, 
+			playstring6_250: function() {notee3_250.play();}, 
+			playstring6_500: function() {notee3_500.play();}, 
+			playstring6_750: function() {notee3_750.play();}, 
+			playstring6_1000: function() {notee3_1000.play();}, 
+			playstring6_1250: function() {notee3_1250.play();}, 
+			playstring6_1500: function() {notee3_1500.play();},
+			playstring6_1750: function() {notee3_1750.play();},
+			playstring6_2000: function() {notee3_2000.play();}
+		};
+		const C_minor = {
+			key: "minor",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA4_250.play();}, 
+			playstring2_500: function() {noteA4_500.play();}, 
+			playstring2_750: function() {noteA4_750.play();}, 
+			playstring2_1000: function() {noteA4_1000.play();}, 
+			playstring2_1250: function() {noteA4_1250.play();}, 
+			playstring2_1500: function() {noteA4_1500.play();},
+			playstring2_1750: function() {noteA4_1750.play();},
+			playstring2_2000: function() {noteA4_2000.play();}, 
+			playstring3_250: function() {noteD6_250.play();}, 
+			playstring3_500: function() {noteD6_500.play();}, 
+			playstring3_750: function() {noteD6_750.play();}, 
+			playstring3_1000: function() {noteD6_1000.play();}, 
+			playstring3_1250: function() {noteD6_1250.play();}, 
+			playstring3_1500: function() {noteD6_1500.play();},
+			playstring3_1750: function() {noteD6_1750.play();},
+			playstring3_2000: function() {noteD6_2000.play();}, 
+			playstring4_250: function() {noteG6_250.play();}, 
+			playstring4_500: function() {noteG6_500.play();}, 
+			playstring4_750: function() {noteG6_750.play();}, 
+			playstring4_1000: function() {noteG6_1000.play();}, 
+			playstring4_1250: function() {noteG6_1250.play();}, 
+			playstring4_1500: function() {noteG6_1500.play();},
+			playstring4_1750: function() {noteG6_1750.play();},
+			playstring4_2000: function() {noteG6_2000.play();}, 
+			playstring5_250: function() {noteB5_250.play();}, 
+			playstring5_500: function() {noteB5_500.play();}, 
+			playstring5_750: function() {noteB5_750.play();}, 
+			playstring5_1000: function() {noteB5_1000.play();}, 
+			playstring5_1250: function() {noteB5_1250.play();}, 
+			playstring5_1500: function() {noteB5_1500.play();},
+			playstring5_1750: function() {noteB5_1750.play();},
+			playstring5_2000: function() {noteB5_2000.play();}, 
+			playstring6_250: function() {notee4_250.play();}, 
+			playstring6_500: function() {notee4_500.play();}, 
+			playstring6_750: function() {notee4_750.play();}, 
+			playstring6_1000: function() {notee4_1000.play();}, 
+			playstring6_1250: function() {notee4_1250.play();}, 
+			playstring6_1500: function() {notee4_1500.play();},
+			playstring6_1750: function() {notee4_1750.play();},
+			playstring6_2000: function() {notee4_2000.play();}
+		};
+		const Dminor = {
+			key: "minor",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: undefined, 
+			playstring2_500: undefined, 
+			playstring2_750: undefined, 
+			playstring2_1000: undefined, 
+			playstring2_1250: undefined, 
+			playstring2_1500: undefined, 
+			playstring2_1750: undefined, 
+			playstring2_2000: undefined, 
+			playstring3_250: function() {noteD0_250.play();}, 
+			playstring3_500: function() {noteD0_500.play();}, 
+			playstring3_750: function() {noteD0_750.play();}, 
+			playstring3_1000: function() {noteD0_1000.play();}, 
+			playstring3_1250: function() {noteD0_1250.play();}, 
+			playstring3_1500: function() {noteD0_1500.play();},
+			playstring3_1750: function() {noteD0_1750.play();},
+			playstring3_2000: function() {noteD0_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: function() {noteB3_250.play();}, 
+			playstring5_500: function() {noteB3_500.play();}, 
+			playstring5_750: function() {noteB3_750.play();}, 
+			playstring5_1000: function() {noteB3_1000.play();}, 
+			playstring5_1250: function() {noteB3_1250.play();}, 
+			playstring5_1500: function() {noteB3_1500.play();},
+			playstring5_1750: function() {noteB3_1750.play();},
+			playstring5_2000: function() {noteB3_2000.play();}, 
+			playstring6_250: function() {notee1_250.play();}, 
+			playstring6_500: function() {notee1_500.play();}, 
+			playstring6_750: function() {notee1_750.play();}, 
+			playstring6_1000: function() {notee1_1000.play();}, 
+			playstring6_1250: function() {notee1_1250.play();}, 
+			playstring6_1500: function() {notee1_1500.play();},
+			playstring6_1750: function() {notee1_1750.play();},
+			playstring6_2000: function() {notee1_2000.play();}
+		};
+		const D_minor = {
+			key: "minor",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: undefined, 
+			playstring2_500: undefined, 
+			playstring2_750: undefined, 
+			playstring2_1000: undefined, 
+			playstring2_1250: undefined, 
+			playstring2_1500: undefined, 
+			playstring2_1750: undefined, 
+			playstring2_2000: undefined, 
+			playstring3_250: function() {noteD1_250.play();}, 
+			playstring3_500: function() {noteD1_500.play();}, 
+			playstring3_750: function() {noteD1_750.play();}, 
+			playstring3_1000: function() {noteD1_1000.play();}, 
+			playstring3_1250: function() {noteD1_1250.play();}, 
+			playstring3_1500: function() {noteD1_1500.play();},
+			playstring3_1750: function() {noteD1_1750.play();},
+			playstring3_2000: function() {noteD1_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: function() {noteB4_250.play();}, 
+			playstring5_500: function() {noteB4_500.play();}, 
+			playstring5_750: function() {noteB4_750.play();}, 
+			playstring5_1000: function() {noteB4_1000.play();}, 
+			playstring5_1250: function() {noteB4_1250.play();}, 
+			playstring5_1500: function() {noteB4_1500.play();},
+			playstring5_1750: function() {noteB4_1750.play();},
+			playstring5_2000: function() {noteB4_2000.play();}, 
+			playstring6_250: function() {notee2_250.play();}, 
+			playstring6_500: function() {notee2_500.play();}, 
+			playstring6_750: function() {notee2_750.play();}, 
+			playstring6_1000: function() {notee2_1000.play();}, 
+			playstring6_1250: function() {notee2_1250.play();}, 
+			playstring6_1500: function() {notee2_1500.play();},
+			playstring6_1750: function() {notee2_1750.play();},
+			playstring6_2000: function() {notee2_2000.play();}
+		};
+		const Eminor = {
+			key: "minor",
+			playstring1_250: function() {noteE0_250.play();}, 
+			playstring1_500: function() {noteE0_500.play();}, 
+			playstring1_750: function() {noteE0_750.play();}, 
+			playstring1_1000: function() {noteE0_1000.play();}, 
+			playstring1_1250: function() {noteE0_1250.play();}, 
+			playstring1_1500: function() {noteE0_1500.play();},
+			playstring1_1750: function() {noteE0_1750.play();},
+			playstring1_2000: function() {noteE0_2000.play();}, 
+			playstring2_250: function() {noteA2_250.play();}, 
+			playstring2_500: function() {noteA2_500.play();}, 
+			playstring2_750: function() {noteA2_750.play();}, 
+			playstring2_1000: function() {noteA2_1000.play();}, 
+			playstring2_1250: function() {noteA2_1250.play();}, 
+			playstring2_1500: function() {noteA2_1500.play();},
+			playstring2_1750: function() {noteA2_1750.play();},
+			playstring2_2000: function() {noteA2_2000.play();}, 
+			playstring3_250: function() {noteD2_250.play();}, 
+			playstring3_500: function() {noteD2_500.play();}, 
+			playstring3_750: function() {noteD2_750.play();}, 
+			playstring3_1000: function() {noteD2_1000.play();}, 
+			playstring3_1250: function() {noteD2_1250.play();}, 
+			playstring3_1500: function() {noteD2_1500.play();},
+			playstring3_1750: function() {noteD2_1750.play();},
+			playstring3_2000: function() {noteD2_2000.play();}, 
+			playstring4_250: function() {noteG0_250.play();}, 
+			playstring4_500: function() {noteG0_500.play();}, 
+			playstring4_750: function() {noteG0_750.play();}, 
+			playstring4_1000: function() {noteG0_1000.play();}, 
+			playstring4_1250: function() {noteG0_1250.play();}, 
+			playstring4_1500: function() {noteG0_1500.play();},
+			playstring4_1750: function() {noteG0_1750.play();},
+			playstring4_2000: function() {noteG0_2000.play();}, 
+			playstring5_250: function() {noteB0_250.play();}, 
+			playstring5_500: function() {noteB0_500.play();}, 
+			playstring5_750: function() {noteB0_750.play();}, 
+			playstring5_1000: function() {noteB0_1000.play();}, 
+			playstring5_1250: function() {noteB0_1250.play();}, 
+			playstring5_1500: function() {noteB0_1500.play();},
+			playstring5_1750: function() {noteB0_1750.play();},
+			playstring5_2000: function() {noteB0_2000.play();}, 
+			playstring6_250: function() {notee0_250.play();}, 
+			playstring6_500: function() {notee0_500.play();}, 
+			playstring6_750: function() {notee0_750.play();}, 
+			playstring6_1000: function() {notee0_1000.play();}, 
+			playstring6_1250: function() {notee0_1250.play();}, 
+			playstring6_1500: function() {notee0_1500.play();},
+			playstring6_1750: function() {notee0_1750.play();},
+			playstring6_2000: function() {notee0_2000.play();}
+		};
+		const Fminor = {
+			key: "minor",
+			playstring1_250: function() {noteE1_250.play();}, 
+			playstring1_500: function() {noteE1_500.play();}, 
+			playstring1_750: function() {noteE1_750.play();}, 
+			playstring1_1000: function() {noteE1_1000.play();}, 
+			playstring1_1250: function() {noteE1_1250.play();}, 
+			playstring1_1500: function() {noteE1_1500.play();},
+			playstring1_1750: function() {noteE1_1750.play();},
+			playstring1_2000: function() {noteE1_2000.play();}, 
+			playstring2_250: function() {noteA3_250.play();}, 
+			playstring2_500: function() {noteA3_500.play();}, 
+			playstring2_750: function() {noteA3_750.play();}, 
+			playstring2_1000: function() {noteA3_1000.play();}, 
+			playstring2_1250: function() {noteA3_1250.play();}, 
+			playstring2_1500: function() {noteA3_1500.play();},
+			playstring2_1750: function() {noteA3_1750.play();},
+			playstring2_2000: function() {noteA3_2000.play();}, 
+			playstring3_250: function() {noteD3_250.play();}, 
+			playstring3_500: function() {noteD3_500.play();}, 
+			playstring3_750: function() {noteD3_750.play();}, 
+			playstring3_1000: function() {noteD3_1000.play();}, 
+			playstring3_1250: function() {noteD3_1250.play();}, 
+			playstring3_1500: function() {noteD3_1500.play();},
+			playstring3_1750: function() {noteD3_1750.play();},
+			playstring3_2000: function() {noteD3_2000.play();}, 
+			playstring4_250: function() {noteG1_250.play();}, 
+			playstring4_500: function() {noteG1_500.play();}, 
+			playstring4_750: function() {noteG1_750.play();}, 
+			playstring4_1000: function() {noteG1_1000.play();}, 
+			playstring4_1250: function() {noteG1_1250.play();}, 
+			playstring4_1500: function() {noteG1_1500.play();},
+			playstring4_1750: function() {noteG1_1750.play();},
+			playstring4_2000: function() {noteG1_2000.play();}, 
+			playstring5_250: function() {noteB1_250.play();}, 
+			playstring5_500: function() {noteB1_500.play();}, 
+			playstring5_750: function() {noteB1_750.play();}, 
+			playstring5_1000: function() {noteB1_1000.play();}, 
+			playstring5_1250: function() {noteB1_1250.play();}, 
+			playstring5_1500: function() {noteB1_1500.play();},
+			playstring5_1750: function() {noteB1_1750.play();},
+			playstring5_2000: function() {noteB1_2000.play();}, 
+			playstring6_250: function() {notee1_250.play();}, 
+			playstring6_500: function() {notee1_500.play();}, 
+			playstring6_750: function() {notee1_750.play();}, 
+			playstring6_1000: function() {notee1_1000.play();}, 
+			playstring6_1250: function() {notee1_1250.play();}, 
+			playstring6_1500: function() {notee1_1500.play();},
+			playstring6_1750: function() {notee1_1750.play();},
+			playstring6_2000: function() {notee1_2000.play();}
+		};
+		const F_minor = {
+			key: "minor",
+			playstring1_250: function() {noteE2_250.play();}, 
+			playstring1_500: function() {noteE2_500.play();}, 
+			playstring1_750: function() {noteE2_750.play();}, 
+			playstring1_1000: function() {noteE2_1000.play();}, 
+			playstring1_1250: function() {noteE2_1250.play();}, 
+			playstring1_1500: function() {noteE2_1500.play();},
+			playstring1_1750: function() {noteE2_1750.play();},
+			playstring1_2000: function() {noteE2_2000.play();}, 
+			playstring2_250: function() {noteA4_250.play();}, 
+			playstring2_500: function() {noteA4_500.play();}, 
+			playstring2_750: function() {noteA4_750.play();}, 
+			playstring2_1000: function() {noteA4_1000.play();}, 
+			playstring2_1250: function() {noteA4_1250.play();}, 
+			playstring2_1500: function() {noteA4_1500.play();},
+			playstring2_1750: function() {noteA4_1750.play();},
+			playstring2_2000: function() {noteA4_2000.play();}, 
+			playstring3_250: function() {noteD4_250.play();}, 
+			playstring3_500: function() {noteD4_500.play();}, 
+			playstring3_750: function() {noteD4_750.play();}, 
+			playstring3_1000: function() {noteD4_1000.play();}, 
+			playstring3_1250: function() {noteD4_1250.play();}, 
+			playstring3_1500: function() {noteD4_1500.play();},
+			playstring3_1750: function() {noteD4_1750.play();},
+			playstring3_2000: function() {noteD4_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: function() {noteB2_250.play();}, 
+			playstring5_500: function() {noteB2_500.play();}, 
+			playstring5_750: function() {noteB2_750.play();}, 
+			playstring5_1000: function() {noteB2_1000.play();}, 
+			playstring5_1250: function() {noteB2_1250.play();}, 
+			playstring5_1500: function() {noteB2_1500.play();},
+			playstring5_1750: function() {noteB2_1750.play();},
+			playstring5_2000: function() {noteB2_2000.play();}, 
+			playstring6_250: function() {notee2_250.play();}, 
+			playstring6_500: function() {notee2_500.play();}, 
+			playstring6_750: function() {notee2_750.play();}, 
+			playstring6_1000: function() {notee2_1000.play();}, 
+			playstring6_1250: function() {notee2_1250.play();}, 
+			playstring6_1500: function() {notee2_1500.play();},
+			playstring6_1750: function() {notee2_1750.play();},
+			playstring6_2000: function() {notee2_2000.play();}
+		};
+		const Gminor = {
+			key: "minor",
+			playstring1_250: function() {noteE3_250.play();}, 
+			playstring1_500: function() {noteE3_500.play();}, 
+			playstring1_750: function() {noteE3_750.play();}, 
+			playstring1_1000: function() {noteE3_1000.play();}, 
+			playstring1_1250: function() {noteE3_1250.play();}, 
+			playstring1_1500: function() {noteE3_1500.play();},
+			playstring1_1750: function() {noteE3_1750.play();},
+			playstring1_2000: function() {noteE3_2000.play();}, 
+			playstring2_250: function() {noteA5_250.play();}, 
+			playstring2_500: function() {noteA5_500.play();}, 
+			playstring2_750: function() {noteA5_750.play();}, 
+			playstring2_1000: function() {noteA5_1000.play();}, 
+			playstring2_1250: function() {noteA5_1250.play();}, 
+			playstring2_1500: function() {noteA5_1500.play();},
+			playstring2_1750: function() {noteA5_1750.play();},
+			playstring2_2000: function() {noteA5_2000.play();}, 
+			playstring3_250: function() {noteD5_250.play();}, 
+			playstring3_500: function() {noteD5_500.play();}, 
+			playstring3_750: function() {noteD5_750.play();}, 
+			playstring3_1000: function() {noteD5_1000.play();}, 
+			playstring3_1250: function() {noteD5_1250.play();}, 
+			playstring3_1500: function() {noteD5_1500.play();},
+			playstring3_1750: function() {noteD5_1750.play();},
+			playstring3_2000: function() {noteD5_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: function() {noteB3_250.play();}, 
+			playstring5_500: function() {noteB3_500.play();}, 
+			playstring5_750: function() {noteB3_750.play();}, 
+			playstring5_1000: function() {noteB3_1000.play();}, 
+			playstring5_1250: function() {noteB3_1250.play();}, 
+			playstring5_1500: function() {noteB3_1500.play();},
+			playstring5_1750: function() {noteB3_1750.play();},
+			playstring5_2000: function() {noteB3_2000.play();}, 
+			playstring6_250: function() {notee3_250.play();}, 
+			playstring6_500: function() {notee3_500.play();}, 
+			playstring6_750: function() {notee3_750.play();}, 
+			playstring6_1000: function() {notee3_1000.play();}, 
+			playstring6_1250: function() {notee3_1250.play();}, 
+			playstring6_1500: function() {notee3_1500.play();},
+			playstring6_1750: function() {notee3_1750.play();},
+			playstring6_2000: function() {notee3_2000.play();}
+		};
+		const G_minor = {
+			key: "minor",
+			playstring1_250: function() {noteE4_250.play();}, 
+			playstring1_500: function() {noteE4_500.play();}, 
+			playstring1_750: function() {noteE4_750.play();}, 
+			playstring1_1000: function() {noteE4_1000.play();}, 
+			playstring1_1250: function() {noteE4_1250.play();}, 
+			playstring1_1500: function() {noteE4_1500.play();},
+			playstring1_1750: function() {noteE4_1750.play();},
+			playstring1_2000: function() {noteE4_2000.play();}, 
+			playstring2_250: function() {noteA6_250.play();}, 
+			playstring2_500: function() {noteA6_500.play();}, 
+			playstring2_750: function() {noteA6_750.play();}, 
+			playstring2_1000: function() {noteA6_1000.play();}, 
+			playstring2_1250: function() {noteA6_1250.play();}, 
+			playstring2_1500: function() {noteA6_1500.play();},
+			playstring2_1750: function() {noteA6_1750.play();},
+			playstring2_2000: function() {noteA6_2000.play();}, 
+			playstring3_250: function() {noteD6_250.play();}, 
+			playstring3_500: function() {noteD6_500.play();}, 
+			playstring3_750: function() {noteD6_750.play();}, 
+			playstring3_1000: function() {noteD6_1000.play();}, 
+			playstring3_1250: function() {noteD6_1250.play();}, 
+			playstring3_1500: function() {noteD6_1500.play();},
+			playstring3_1750: function() {noteD6_1750.play();},
+			playstring3_2000: function() {noteD6_2000.play();}, 
+			playstring4_250: function() {noteG4_250.play();}, 
+			playstring4_500: function() {noteG4_500.play();}, 
+			playstring4_750: function() {noteG4_750.play();}, 
+			playstring4_1000: function() {noteG4_1000.play();}, 
+			playstring4_1250: function() {noteG4_1250.play();}, 
+			playstring4_1500: function() {noteG4_1500.play();},
+			playstring4_1750: function() {noteG4_1750.play();},
+			playstring4_2000: function() {noteG4_2000.play();}, 
+			playstring5_250: function() {noteB4_250.play();}, 
+			playstring5_500: function() {noteB4_500.play();}, 
+			playstring5_750: function() {noteB4_750.play();}, 
+			playstring5_1000: function() {noteB4_1000.play();}, 
+			playstring5_1250: function() {noteB4_1250.play();}, 
+			playstring5_1500: function() {noteB4_1500.play();},
+			playstring5_1750: function() {noteB4_1750.play();},
+			playstring5_2000: function() {noteB4_2000.play();}, 
+			playstring6_250: function() {notee4_250.play();}, 
+			playstring6_500: function() {notee4_500.play();}, 
+			playstring6_750: function() {notee4_750.play();}, 
+			playstring6_1000: function() {notee4_1000.play();}, 
+			playstring6_1250: function() {notee4_1250.play();}, 
+			playstring6_1500: function() {notee4_1500.play();},
+			playstring6_1750: function() {notee4_1750.play();},
+			playstring6_2000: function() {notee4_2000.play();}
+		};
+		//diminished
+		const Adiminished = {
+			key: "diminished",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA0_250.play();}, 
+			playstring2_500: function() {noteA0_500.play();}, 
+			playstring2_750: function() {noteA0_750.play();}, 
+			playstring2_1000: function() {noteA0_1000.play();}, 
+			playstring2_1250: function() {noteA0_1250.play();}, 
+			playstring2_1500: function() {noteA0_1500.play();},
+			playstring2_1750: function() {noteA0_1750.play();},
+			playstring2_2000: function() {noteA0_2000.play();}, 
+			playstring3_250: function() {noteD1_250.play();}, 
+			playstring3_500: function() {noteD1_500.play();}, 
+			playstring3_750: function() {noteD1_750.play();}, 
+			playstring3_1000: function() {noteD1_1000.play();}, 
+			playstring3_1250: function() {noteD1_1250.play();}, 
+			playstring3_1500: function() {noteD1_1500.play();},
+			playstring3_1750: function() {noteD1_1750.play();},
+			playstring3_2000: function() {noteD1_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: function() {noteB1_250.play();}, 
+			playstring5_500: function() {noteB1_500.play();}, 
+			playstring5_750: function() {noteB1_750.play();}, 
+			playstring5_1000: function() {noteB1_1000.play();}, 
+			playstring5_1250: function() {noteB1_1250.play();}, 
+			playstring5_1500: function() {noteB1_1500.play();},
+			playstring5_1750: function() {noteB1_1750.play();},
+			playstring5_2000: function() {noteB1_2000.play();}, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const A_diminished = {
+			key: "diminished",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA1_250.play();}, 
+			playstring2_500: function() {noteA1_500.play();}, 
+			playstring2_750: function() {noteA1_750.play();}, 
+			playstring2_1000: function() {noteA1_1000.play();}, 
+			playstring2_1250: function() {noteA1_1250.play();}, 
+			playstring2_1500: function() {noteA1_1500.play();},
+			playstring2_1750: function() {noteA1_1750.play();},
+			playstring2_2000: function() {noteA1_2000.play();}, 
+			playstring3_250: function() {noteD2_250.play();}, 
+			playstring3_500: function() {noteD2_500.play();}, 
+			playstring3_750: function() {noteD2_750.play();}, 
+			playstring3_1000: function() {noteD2_1000.play();}, 
+			playstring3_1250: function() {noteD2_1250.play();}, 
+			playstring3_1500: function() {noteD2_1500.play();},
+			playstring3_1750: function() {noteD2_1750.play();},
+			playstring3_2000: function() {noteD2_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: function() {noteB2_250.play();}, 
+			playstring5_500: function() {noteB2_500.play();}, 
+			playstring5_750: function() {noteB2_750.play();}, 
+			playstring5_1000: function() {noteB2_1000.play();}, 
+			playstring5_1250: function() {noteB2_1250.play();}, 
+			playstring5_1500: function() {noteB2_1500.play();},
+			playstring5_1750: function() {noteB2_1750.play();},
+			playstring5_2000: function() {noteB2_2000.play();}, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const Bdiminished = {
+			key: "diminished",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA2_250.play();}, 
+			playstring2_500: function() {noteA2_500.play();}, 
+			playstring2_750: function() {noteA2_750.play();}, 
+			playstring2_1000: function() {noteA2_1000.play();}, 
+			playstring2_1250: function() {noteA2_1250.play();}, 
+			playstring2_1500: function() {noteA2_1500.play();},
+			playstring2_1750: function() {noteA2_1750.play();},
+			playstring2_2000: function() {noteA2_2000.play();}, 
+			playstring3_250: function() {noteD3_250.play();}, 
+			playstring3_500: function() {noteD3_500.play();}, 
+			playstring3_750: function() {noteD3_750.play();}, 
+			playstring3_1000: function() {noteD3_1000.play();}, 
+			playstring3_1250: function() {noteD3_1250.play();}, 
+			playstring3_1500: function() {noteD3_1500.play();},
+			playstring3_1750: function() {noteD3_1750.play();},
+			playstring3_2000: function() {noteD3_2000.play();}, 
+			playstring4_250: function() {noteG4_250.play();}, 
+			playstring4_500: function() {noteG4_500.play();}, 
+			playstring4_750: function() {noteG4_750.play();}, 
+			playstring4_1000: function() {noteG4_1000.play();}, 
+			playstring4_1250: function() {noteG4_1250.play();}, 
+			playstring4_1500: function() {noteG4_1500.play();},
+			playstring4_1750: function() {noteG4_1750.play();},
+			playstring4_2000: function() {noteG4_2000.play();}, 
+			playstring5_250: function() {noteB3_250.play();}, 
+			playstring5_500: function() {noteB3_500.play();}, 
+			playstring5_750: function() {noteB3_750.play();}, 
+			playstring5_1000: function() {noteB3_1000.play();}, 
+			playstring5_1250: function() {noteB3_1250.play();}, 
+			playstring5_1500: function() {noteB3_1500.play();},
+			playstring5_1750: function() {noteB3_1750.play();},
+			playstring5_2000: function() {noteB3_2000.play();}, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const Cdiminished = {
+			key: "diminished",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA3_250.play();}, 
+			playstring2_500: function() {noteA3_500.play();}, 
+			playstring2_750: function() {noteA3_750.play();}, 
+			playstring2_1000: function() {noteA3_1000.play();}, 
+			playstring2_1250: function() {noteA3_1250.play();}, 
+			playstring2_1500: function() {noteA3_1500.play();},
+			playstring2_1750: function() {noteA3_1750.play();},
+			playstring2_2000: function() {noteA3_2000.play();}, 
+			playstring3_250: function() {noteD4_250.play();}, 
+			playstring3_500: function() {noteD4_500.play();}, 
+			playstring3_750: function() {noteD4_750.play();}, 
+			playstring3_1000: function() {noteD4_1000.play();}, 
+			playstring3_1250: function() {noteD4_1250.play();}, 
+			playstring3_1500: function() {noteD4_1500.play();},
+			playstring3_1750: function() {noteD4_1750.play();},
+			playstring3_2000: function() {noteD4_2000.play();}, 
+			playstring4_250: function() {noteG5_250.play();}, 
+			playstring4_500: function() {noteG5_500.play();}, 
+			playstring4_750: function() {noteG5_750.play();}, 
+			playstring4_1000: function() {noteG5_1000.play();}, 
+			playstring4_1250: function() {noteG5_1250.play();}, 
+			playstring4_1500: function() {noteG5_1500.play();},
+			playstring4_1750: function() {noteG5_1750.play();},
+			playstring4_2000: function() {noteG5_2000.play();}, 
+			playstring5_250: function() {noteB4_250.play();}, 
+			playstring5_500: function() {noteB4_500.play();}, 
+			playstring5_750: function() {noteB4_750.play();}, 
+			playstring5_1000: function() {noteB4_1000.play();}, 
+			playstring5_1250: function() {noteB4_1250.play();}, 
+			playstring5_1500: function() {noteB4_1500.play();},
+			playstring5_1750: function() {noteB4_1750.play();},
+			playstring5_2000: function() {noteB4_2000.play();}, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const C_diminished = {
+			key: "diminished",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA4_250.play();}, 
+			playstring2_500: function() {noteA4_500.play();}, 
+			playstring2_750: function() {noteA4_750.play();}, 
+			playstring2_1000: function() {noteA4_1000.play();}, 
+			playstring2_1250: function() {noteA4_1250.play();}, 
+			playstring2_1500: function() {noteA4_1500.play();},
+			playstring2_1750: function() {noteA4_1750.play();},
+			playstring2_2000: function() {noteA4_2000.play();}, 
+			playstring3_250: function() {noteD5_250.play();}, 
+			playstring3_500: function() {noteD5_500.play();}, 
+			playstring3_750: function() {noteD5_750.play();}, 
+			playstring3_1000: function() {noteD5_1000.play();}, 
+			playstring3_1250: function() {noteD5_1250.play();}, 
+			playstring3_1500: function() {noteD5_1500.play();},
+			playstring3_1750: function() {noteD5_1750.play();},
+			playstring3_2000: function() {noteD5_2000.play();}, 
+			playstring4_250: function() {noteG6_250.play();}, 
+			playstring4_500: function() {noteG6_500.play();}, 
+			playstring4_750: function() {noteG6_750.play();}, 
+			playstring4_1000: function() {noteG6_1000.play();}, 
+			playstring4_1250: function() {noteG6_1250.play();}, 
+			playstring4_1500: function() {noteG6_1500.play();},
+			playstring4_1750: function() {noteG6_1750.play();},
+			playstring4_2000: function() {noteG6_2000.play();}, 
+			playstring5_250: function() {noteB5_250.play();}, 
+			playstring5_500: function() {noteB5_500.play();}, 
+			playstring5_750: function() {noteB5_750.play();}, 
+			playstring5_1000: function() {noteB5_1000.play();}, 
+			playstring5_1250: function() {noteB5_1250.play();}, 
+			playstring5_1500: function() {noteB5_1500.play();},
+			playstring5_1750: function() {noteB5_1750.play();},
+			playstring5_2000: function() {noteB5_2000.play();}, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const Ddiminished = {
+			key: "diminished",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA5_250.play();}, 
+			playstring2_500: function() {noteA5_500.play();}, 
+			playstring2_750: function() {noteA5_750.play();}, 
+			playstring2_1000: function() {noteA5_1000.play();}, 
+			playstring2_1250: function() {noteA5_1250.play();}, 
+			playstring2_1500: function() {noteA5_1500.play();},
+			playstring2_1750: function() {noteA5_1750.play();},
+			playstring2_2000: function() {noteA5_2000.play();}, 
+			playstring3_250: function() {noteD6_250.play();}, 
+			playstring3_500: function() {noteD6_500.play();}, 
+			playstring3_750: function() {noteD6_750.play();}, 
+			playstring3_1000: function() {noteD6_1000.play();}, 
+			playstring3_1250: function() {noteD6_1250.play();}, 
+			playstring3_1500: function() {noteD6_1500.play();},
+			playstring3_1750: function() {noteD6_1750.play();},
+			playstring3_2000: function() {noteD6_2000.play();}, 
+			playstring4_250: function() {noteG7_250.play();}, 
+			playstring4_500: function() {noteG7_500.play();}, 
+			playstring4_750: function() {noteG7_750.play();}, 
+			playstring4_1000: function() {noteG7_1000.play();}, 
+			playstring4_1250: function() {noteG7_1250.play();}, 
+			playstring4_1500: function() {noteG7_1500.play();},
+			playstring4_1750: function() {noteG7_1750.play();},
+			playstring4_2000: function() {noteG7_2000.play();}, 
+			playstring5_250: function() {noteB6_250.play();}, 
+			playstring5_500: function() {noteB6_500.play();}, 
+			playstring5_750: function() {noteB6_750.play();}, 
+			playstring5_1000: function() {noteB6_1000.play();}, 
+			playstring5_1250: function() {noteB6_1250.play();}, 
+			playstring5_1500: function() {noteB6_1500.play();},
+			playstring5_1750: function() {noteB6_1750.play();},
+			playstring5_2000: function() {noteB6_2000.play();}, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const D_diminished = {
+			key: "diminished",
+			playstring1_250: undefined, 
+			playstring1_500: undefined, 
+			playstring1_750: undefined, 
+			playstring1_1000: undefined, 
+			playstring1_1250: undefined, 
+			playstring1_1500: undefined,
+			playstring1_1750: undefined, 
+			playstring1_2000: undefined, 
+			playstring2_250: function() {noteA6_250.play();}, 
+			playstring2_500: function() {noteA6_500.play();}, 
+			playstring2_750: function() {noteA6_750.play();}, 
+			playstring2_1000: function() {noteA6_1000.play();}, 
+			playstring2_1250: function() {noteA6_1250.play();}, 
+			playstring2_1500: function() {noteA6_1500.play();},
+			playstring2_1750: function() {noteA6_1750.play();},
+			playstring2_2000: function() {noteA6_2000.play();}, 
+			playstring3_250: function() {noteD7_250.play();}, 
+			playstring3_500: function() {noteD7_500.play();}, 
+			playstring3_750: function() {noteD7_750.play();}, 
+			playstring3_1000: function() {noteD7_1000.play();}, 
+			playstring3_1250: function() {noteD7_1250.play();}, 
+			playstring3_1500: function() {noteD7_1500.play();},
+			playstring3_1750: function() {noteD7_1750.play();},
+			playstring3_2000: function() {noteD7_2000.play();}, 
+			playstring4_250: function() {noteG8_250.play();}, 
+			playstring4_500: function() {noteG8_500.play();}, 
+			playstring4_750: function() {noteG8_750.play();}, 
+			playstring4_1000: function() {noteG8_1000.play();}, 
+			playstring4_1250: function() {noteG8_1250.play();}, 
+			playstring4_1500: function() {noteG8_1500.play();},
+			playstring4_1750: function() {noteG8_1750.play();},
+			playstring4_2000: function() {noteG8_2000.play();}, 
+			playstring5_250: function() {noteB7_250.play();}, 
+			playstring5_500: function() {noteB7_500.play();}, 
+			playstring5_750: function() {noteB7_750.play();}, 
+			playstring5_1000: function() {noteB7_1000.play();}, 
+			playstring5_1250: function() {noteB7_1250.play();}, 
+			playstring5_1500: function() {noteB7_1500.play();},
+			playstring5_1750: function() {noteB7_1750.play();},
+			playstring5_2000: function() {noteB7_2000.play();}, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const Ediminished = {
+			key: "diminished",
+			playstring1_250: function() {noteE0_250.play();}, 
+			playstring1_500: function() {noteE0_500.play();}, 
+			playstring1_750: function() {noteE0_750.play();}, 
+			playstring1_1000: function() {noteE0_1000.play();}, 
+			playstring1_1250: function() {noteE0_1250.play();}, 
+			playstring1_1500: function() {noteE0_1500.play();},
+			playstring1_1750: function() {noteE0_1750.play();}, 
+			playstring1_2000: function() {noteE0_2000.play();}, 
+			playstring2_250: function() {noteA1_250.play();}, 
+			playstring2_500: function() {noteA1_500.play();}, 
+			playstring2_750: function() {noteA1_750.play();}, 
+			playstring2_1000: function() {noteA1_1000.play();}, 
+			playstring2_1250: function() {noteA1_1250.play();}, 
+			playstring2_1500: function() {noteA1_1500.play();},
+			playstring2_1750: function() {noteA1_1750.play();},
+			playstring2_2000: function() {noteA1_2000.play();}, 
+			playstring3_250: function() {noteD2_250.play();}, 
+			playstring3_500: function() {noteD2_500.play();}, 
+			playstring3_750: function() {noteD2_750.play();}, 
+			playstring3_1000: function() {noteD2_1000.play();}, 
+			playstring3_1250: function() {noteD2_1250.play();}, 
+			playstring3_1500: function() {noteD2_1500.play();},
+			playstring3_1750: function() {noteD2_1750.play();},
+			playstring3_2000: function() {noteD2_2000.play();}, 
+			playstring4_250: function() {noteG0_250.play();}, 
+			playstring4_500: function() {noteG0_500.play();}, 
+			playstring4_750: function() {noteG0_750.play();}, 
+			playstring4_1000: function() {noteG0_1000.play();}, 
+			playstring4_1250: function() {noteG0_1250.play();}, 
+			playstring4_1500: function() {noteG0_1500.play();},
+			playstring4_1750: function() {noteG0_1750.play();},
+			playstring4_2000: function() {noteG0_2000.play();}, 
+			playstring5_250: undefined, 
+			playstring5_500: undefined, 
+			playstring5_750: undefined, 
+			playstring5_1000: undefined, 
+			playstring5_1250: undefined, 
+			playstring5_1500: undefined, 
+			playstring5_1750: undefined,
+			playstring5_2000: undefined, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const Fdiminished = {
+			key: "diminished",
+			playstring1_250: function() {noteE1_250.play();}, 
+			playstring1_500: function() {noteE1_500.play();}, 
+			playstring1_750: function() {noteE1_750.play();}, 
+			playstring1_1000: function() {noteE1_1000.play();}, 
+			playstring1_1250: function() {noteE1_1250.play();}, 
+			playstring1_1500: function() {noteE1_1500.play();},
+			playstring1_1750: function() {noteE1_1750.play();}, 
+			playstring1_2000: function() {noteE1_2000.play();}, 
+			playstring2_250: function() {noteA2_250.play();}, 
+			playstring2_500: function() {noteA2_500.play();}, 
+			playstring2_750: function() {noteA2_750.play();}, 
+			playstring2_1000: function() {noteA2_1000.play();}, 
+			playstring2_1250: function() {noteA2_1250.play();}, 
+			playstring2_1500: function() {noteA2_1500.play();},
+			playstring2_1750: function() {noteA2_1750.play();},
+			playstring2_2000: function() {noteA2_2000.play();}, 
+			playstring3_250: function() {noteD3_250.play();}, 
+			playstring3_500: function() {noteD3_500.play();}, 
+			playstring3_750: function() {noteD3_750.play();}, 
+			playstring3_1000: function() {noteD3_1000.play();}, 
+			playstring3_1250: function() {noteD3_1250.play();}, 
+			playstring3_1500: function() {noteD3_1500.play();},
+			playstring3_1750: function() {noteD3_1750.play();},
+			playstring3_2000: function() {noteD3_2000.play();}, 
+			playstring4_250: function() {noteG1_250.play();}, 
+			playstring4_500: function() {noteG1_500.play();}, 
+			playstring4_750: function() {noteG1_750.play();}, 
+			playstring4_1000: function() {noteG1_1000.play();}, 
+			playstring4_1250: function() {noteG1_1250.play();}, 
+			playstring4_1500: function() {noteG1_1500.play();},
+			playstring4_1750: function() {noteG1_1750.play();},
+			playstring4_2000: function() {noteG1_2000.play();}, 
+			playstring5_250: undefined, 
+			playstring5_500: undefined, 
+			playstring5_750: undefined, 
+			playstring5_1000: undefined, 
+			playstring5_1250: undefined, 
+			playstring5_1500: undefined, 
+			playstring5_1750: undefined,
+			playstring5_2000: undefined, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const F_diminished = {
+			key: "diminished",
+			playstring1_250: function() {noteE2_250.play();}, 
+			playstring1_500: function() {noteE2_500.play();}, 
+			playstring1_750: function() {noteE2_750.play();}, 
+			playstring1_1000: function() {noteE2_1000.play();}, 
+			playstring1_1250: function() {noteE2_1250.play();}, 
+			playstring1_1500: function() {noteE2_1500.play();},
+			playstring1_1750: function() {noteE2_1750.play();}, 
+			playstring1_2000: function() {noteE2_2000.play();}, 
+			playstring2_250: function() {noteA3_250.play();}, 
+			playstring2_500: function() {noteA3_500.play();}, 
+			playstring2_750: function() {noteA3_750.play();}, 
+			playstring2_1000: function() {noteA3_1000.play();}, 
+			playstring2_1250: function() {noteA3_1250.play();}, 
+			playstring2_1500: function() {noteA3_1500.play();},
+			playstring2_1750: function() {noteA3_1750.play();},
+			playstring2_2000: function() {noteA3_2000.play();}, 
+			playstring3_250: function() {noteD4_250.play();}, 
+			playstring3_500: function() {noteD4_500.play();}, 
+			playstring3_750: function() {noteD4_750.play();}, 
+			playstring3_1000: function() {noteD4_1000.play();}, 
+			playstring3_1250: function() {noteD4_1250.play();}, 
+			playstring3_1500: function() {noteD4_1500.play();},
+			playstring3_1750: function() {noteD4_1750.play();},
+			playstring3_2000: function() {noteD4_2000.play();}, 
+			playstring4_250: function() {noteG2_250.play();}, 
+			playstring4_500: function() {noteG2_500.play();}, 
+			playstring4_750: function() {noteG2_750.play();}, 
+			playstring4_1000: function() {noteG2_1000.play();}, 
+			playstring4_1250: function() {noteG2_1250.play();}, 
+			playstring4_1500: function() {noteG2_1500.play();},
+			playstring4_1750: function() {noteG2_1750.play();},
+			playstring4_2000: function() {noteG2_2000.play();}, 
+			playstring5_250: undefined, 
+			playstring5_500: undefined, 
+			playstring5_750: undefined, 
+			playstring5_1000: undefined, 
+			playstring5_1250: undefined, 
+			playstring5_1500: undefined, 
+			playstring5_1750: undefined,
+			playstring5_2000: undefined, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const Gdiminished = {
+			key: "diminished",
+			playstring1_250: function() {noteE3_250.play();}, 
+			playstring1_500: function() {noteE3_500.play();}, 
+			playstring1_750: function() {noteE3_750.play();}, 
+			playstring1_1000: function() {noteE3_1000.play();}, 
+			playstring1_1250: function() {noteE3_1250.play();}, 
+			playstring1_1500: function() {noteE3_1500.play();},
+			playstring1_1750: function() {noteE3_1750.play();}, 
+			playstring1_2000: function() {noteE3_2000.play();}, 
+			playstring2_250: function() {noteA4_250.play();}, 
+			playstring2_500: function() {noteA4_500.play();}, 
+			playstring2_750: function() {noteA4_750.play();}, 
+			playstring2_1000: function() {noteA4_1000.play();}, 
+			playstring2_1250: function() {noteA4_1250.play();}, 
+			playstring2_1500: function() {noteA4_1500.play();},
+			playstring2_1750: function() {noteA4_1750.play();},
+			playstring2_2000: function() {noteA4_2000.play();}, 
+			playstring3_250: function() {noteD5_250.play();}, 
+			playstring3_500: function() {noteD5_500.play();}, 
+			playstring3_750: function() {noteD5_750.play();}, 
+			playstring3_1000: function() {noteD5_1000.play();}, 
+			playstring3_1250: function() {noteD5_1250.play();}, 
+			playstring3_1500: function() {noteD5_1500.play();},
+			playstring3_1750: function() {noteD5_1750.play();},
+			playstring3_2000: function() {noteD5_2000.play();}, 
+			playstring4_250: function() {noteG3_250.play();}, 
+			playstring4_500: function() {noteG3_500.play();}, 
+			playstring4_750: function() {noteG3_750.play();}, 
+			playstring4_1000: function() {noteG3_1000.play();}, 
+			playstring4_1250: function() {noteG3_1250.play();}, 
+			playstring4_1500: function() {noteG3_1500.play();},
+			playstring4_1750: function() {noteG3_1750.play();},
+			playstring4_2000: function() {noteG3_2000.play();}, 
+			playstring5_250: undefined, 
+			playstring5_500: undefined, 
+			playstring5_750: undefined, 
+			playstring5_1000: undefined, 
+			playstring5_1250: undefined, 
+			playstring5_1500: undefined, 
+			playstring5_1750: undefined,
+			playstring5_2000: undefined, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+		const G_diminished = {
+			key: "diminished",
+			playstring1_250: function() {noteE4_250.play();}, 
+			playstring1_500: function() {noteE4_500.play();}, 
+			playstring1_750: function() {noteE4_750.play();}, 
+			playstring1_1000: function() {noteE4_1000.play();}, 
+			playstring1_1250: function() {noteE4_1250.play();}, 
+			playstring1_1500: function() {noteE4_1500.play();},
+			playstring1_1750: function() {noteE4_1750.play();}, 
+			playstring1_2000: function() {noteE4_2000.play();}, 
+			playstring2_250: function() {noteA5_250.play();}, 
+			playstring2_500: function() {noteA5_500.play();}, 
+			playstring2_750: function() {noteA5_750.play();}, 
+			playstring2_1000: function() {noteA5_1000.play();}, 
+			playstring2_1250: function() {noteA5_1250.play();}, 
+			playstring2_1500: function() {noteA5_1500.play();},
+			playstring2_1750: function() {noteA5_1750.play();},
+			playstring2_2000: function() {noteA5_2000.play();}, 
+			playstring3_250: function() {noteD6_250.play();}, 
+			playstring3_500: function() {noteD6_500.play();}, 
+			playstring3_750: function() {noteD6_750.play();}, 
+			playstring3_1000: function() {noteD6_1000.play();}, 
+			playstring3_1250: function() {noteD6_1250.play();}, 
+			playstring3_1500: function() {noteD6_1500.play();},
+			playstring3_1750: function() {noteD6_1750.play();},
+			playstring3_2000: function() {noteD6_2000.play();}, 
+			playstring4_250: function() {noteG4_250.play();}, 
+			playstring4_500: function() {noteG4_500.play();}, 
+			playstring4_750: function() {noteG4_750.play();}, 
+			playstring4_1000: function() {noteG4_1000.play();}, 
+			playstring4_1250: function() {noteG4_1250.play();}, 
+			playstring4_1500: function() {noteG4_1500.play();},
+			playstring4_1750: function() {noteG4_1750.play();},
+			playstring4_2000: function() {noteG4_2000.play();}, 
+			playstring5_250: undefined, 
+			playstring5_500: undefined, 
+			playstring5_750: undefined, 
+			playstring5_1000: undefined, 
+			playstring5_1250: undefined, 
+			playstring5_1500: undefined, 
+			playstring5_1750: undefined,
+			playstring5_2000: undefined, 
+			playstring6_250: undefined, 
+			playstring6_500: undefined, 
+			playstring6_750: undefined, 
+			playstring6_1000: undefined, 
+			playstring6_1250: undefined, 
+			playstring6_1500: undefined, 
+			playstring6_1750: undefined, 
+			playstring6_2000: undefined
+		};
+
+		function chord(chord, technique) {
+			if (technique == "pickingPattern1") {
+				console.log("1");
+				switch (chord.key) {
+					case "major": 
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_250();
+						}
+
+					case "minor":
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_250();
+						}
+
+					case "diminished":
+						if (chord.playstring1_250 == undefined) {
+							chord.playstring2_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_250();
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_250();
+						}
+				}
+			}
+
+			if (technique == "pickingPattern2") {
+				console.log("2");
+				switch (chord.key) {
+					case "major": 
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1500(); 
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_250();
+						}
+
+					case "minor":
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1500(); 
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring6_250();
+						}
+
+					case "diminished":
+						if (chord.playstring1_250 == undefined) {
+							chord.playstring2_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_250();
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1500(); 
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_250();
+						}
+						
+				}
+			}
+
+			if (technique == "pickingPattern3") {
+				console.log("3");
+				switch (chord.key) {
+					case "major": 
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_250();
+						}
+
+					case "minor":
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring6_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_250();
+						}
+
+					case "diminished":
+						if (chord.playstring1_250 == undefined) {
+							chord.playstring2_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_250();
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1500(); 
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_250();
+						}
+				}
+			}
+
+			if (technique == "pickingPattern4") {
+				console.log("4");
+				switch (chord.key) {
+					case "major": 
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1500();
+							chord.playstring6_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_500();
+							chord.playstring6_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_250();
+						}
+
+					case "minor":
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							} else {
+								chord.playstring2_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1500();
+							chord.playstring6_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_500();
+							chord.playstring6_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_250();
+						}
+
+					case "diminished":
+						if (chord.playstring1_250 == undefined) {
+							chord.playstring2_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1500();
+							chord.playstring5_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_500();
+							chord.playstring5_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_250();
+						} else {
+							chord.playstring1_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							chord.playstring4_1500(); 
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							chord.playstring4_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_250();
+						}
+				}
+			}
+
+			if (technique == "pickingPattern5") {
+				console.log("5");
+				switch (chord.key) {
+					case "major": 
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								chord.playstring6_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_250();
+							} else {
+								chord.playstring2_2000();
+								chord.playstring6_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							chord.playstring6_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							chord.playstring6_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							chord.playstring6_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							chord.playstring6_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_250();
+						}
+
+					case "minor":
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								chord.playstring6_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_250();
+							} else {
+								chord.playstring2_2000();
+								chord.playstring6_2000();
+								let start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_1500();
+								chord.playstring6_1500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_1250();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring4_1000();
+								chord.playstring6_1000();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_750();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								chord.playstring6_500();
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring5_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							chord.playstring6_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							chord.playstring6_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1000();
+							chord.playstring6_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_500();
+							chord.playstring6_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring5_250();
+						}
+
+					case "diminished":
+						if (chord.playstring1_250 == undefined) {
+							chord.playstring2_2000();
+							chord.playstring5_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1500();
+							chord.playstring5_1500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1000();
+							chord.playstring5_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_500();
+							chord.playstring5_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring4_250();
+						} else {
+							chord.playstring1_2000();
+							chord.playstring4_2000();
+							let start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1500();
+							chord.playstring4_1500(); 
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_1250();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_1000();
+							chord.playstring4_1000();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_750();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_500();
+							chord.playstring4_500();
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring3_250();
+						}
+				}
+			}
+
+			if (technique == "strummingPattern1") {
+				switch (chord.key) {
+					case "major": 
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+							} else {
+								chord.playstring2_2000();
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1500();
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1000();
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_500();
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+							}
+						} else {
+							chord.playstring1_2000();
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+							chord.playstring5_2000();
+							chord.playstring6_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1500();
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+							chord.playstring5_1500();
+							chord.playstring6_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1000();
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+							chord.playstring5_1000();
+							chord.playstring6_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_500();
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+							chord.playstring5_500();
+							chord.playstring6_500();
+						}
+
+					case "minor":
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+							} else {
+								chord.playstring2_2000();
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1500();
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1000();
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_500();
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+							}
+						} else {
+							chord.playstring1_2000();
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+							chord.playstring5_2000();
+							chord.playstring6_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1500();
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+							chord.playstring5_1500();
+							chord.playstring6_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1000();
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+							chord.playstring5_1000();
+							chord.playstring6_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_500();
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+							chord.playstring5_500();
+							chord.playstring6_500();
+						}
+
+					case "diminished":
+						if (chord.playstring1_250 == undefined) {
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+							chord.playstring5_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+							chord.playstring5_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+							chord.playstring5_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+							chord.playstring5_500();
+						} else {
+							chord.playstring1_2000();
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1500();
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1000();
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_500();
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+						}
+				}
+			}
+
+			if (technique == "strummingPattern2") {
+				switch (chord.key) {
+					case "major": 
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_750();
+								chord.playstring4_750();
+								chord.playstring5_750();
+								chord.playstring6_750();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_250();
+								chord.playstring4_250();
+								chord.playstring5_250();
+								chord.playstring6_250();
+							} else {
+								chord.playstring2_2000();
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1500();
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1000();
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_750();
+								chord.playstring3_750();
+								chord.playstring4_750();
+								chord.playstring5_750();
+								chord.playstring6_750();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_500();
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_250();
+								chord.playstring3_250();
+								chord.playstring4_250();
+								chord.playstring5_250();
+								chord.playstring6_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+							chord.playstring5_2000();
+							chord.playstring6_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1500();
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+							chord.playstring5_1500();
+							chord.playstring6_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1000();
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+							chord.playstring5_1000();
+							chord.playstring6_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_750();
+							chord.playstring2_750();
+							chord.playstring3_750();
+							chord.playstring4_750();
+							chord.playstring5_750();
+							chord.playstring6_750();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_500();
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+							chord.playstring5_500();
+							chord.playstring6_500();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_250();
+							chord.playstring2_250();
+							chord.playstring3_250();
+							chord.playstring4_250();
+							chord.playstring5_250();
+							chord.playstring6_250();
+						}
+
+					case "minor":
+						if (chord.playstring1_250 == undefined) {
+							if (chord.playstring2_250 == undefined) {
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_750();
+								chord.playstring4_750();
+								chord.playstring5_750();
+								chord.playstring6_750();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring3_250();
+								chord.playstring4_250();
+								chord.playstring5_250();
+								chord.playstring6_250();
+							} else {
+								chord.playstring2_2000();
+								chord.playstring3_2000();
+								chord.playstring4_2000();
+								chord.playstring5_2000();
+								chord.playstring6_2000();
+
+								let start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1500();
+								chord.playstring3_1500();
+								chord.playstring4_1500();
+								chord.playstring5_1500();
+								chord.playstring6_1500();
+
+								start = Date.now();
+								while (Date.now() - start < 500) {}
+								chord.playstring2_1000();
+								chord.playstring3_1000();
+								chord.playstring4_1000();
+								chord.playstring5_1000();
+								chord.playstring6_1000();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_750();
+								chord.playstring3_750();
+								chord.playstring4_750();
+								chord.playstring5_750();
+								chord.playstring6_750();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_500();
+								chord.playstring3_500();
+								chord.playstring4_500();
+								chord.playstring5_500();
+								chord.playstring6_500();
+
+								start = Date.now();
+								while (Date.now() - start < 250) {}
+								chord.playstring2_250();
+								chord.playstring3_250();
+								chord.playstring4_250();
+								chord.playstring5_250();
+								chord.playstring6_250();
+							}
+						} else {
+							chord.playstring1_2000();
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+							chord.playstring5_2000();
+							chord.playstring6_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1500();
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+							chord.playstring5_1500();
+							chord.playstring6_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1000();
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+							chord.playstring5_1000();
+							chord.playstring6_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_750();
+							chord.playstring2_750();
+							chord.playstring3_750();
+							chord.playstring4_750();
+							chord.playstring5_750();
+							chord.playstring6_750();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_500();
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+							chord.playstring5_500();
+							chord.playstring6_500();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_250();
+							chord.playstring2_250();
+							chord.playstring3_250();
+							chord.playstring4_250();
+							chord.playstring5_250();
+							chord.playstring6_250();						}
+
+					case "diminished":
+						if (chord.playstring1_250 == undefined) {
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+							chord.playstring5_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+							chord.playstring5_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+							chord.playstring5_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_750();
+							chord.playstring3_750();
+							chord.playstring4_750();
+							chord.playstring5_750();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+							chord.playstring5_500();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring2_250();
+							chord.playstring3_250();
+							chord.playstring4_250();
+							chord.playstring5_250();
+						} else {
+							chord.playstring1_2000();
+							chord.playstring2_2000();
+							chord.playstring3_2000();
+							chord.playstring4_2000();
+
+							let start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1500();
+							chord.playstring2_1500();
+							chord.playstring3_1500();
+							chord.playstring4_1500();
+
+							start = Date.now();
+							while (Date.now() - start < 500) {}
+							chord.playstring1_1000();
+							chord.playstring2_1000();
+							chord.playstring3_1000();
+							chord.playstring4_1000();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_750();
+							chord.playstring2_750();
+							chord.playstring3_750();
+							chord.playstring4_750();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_500();
+							chord.playstring2_500();
+							chord.playstring3_500();
+							chord.playstring4_500();
+
+							start = Date.now();
+							while (Date.now() - start < 250) {}
+							chord.playstring1_250();
+							chord.playstring2_250();
+							chord.playstring3_250();
+							chord.playstring4_250();
+						}
+				}
+			}
+
+			if (technique == "strummingPattern3") {
+				chord.playstring1_2000();
+				chord.playstring2_2000();
+				chord.playstring3_2000();
+				chord.playstring4_2000();
+				chord.playstring5_2000();
+				chord.playstring6_2000();
+
+				let start = Date.now();
+				while (Date.now() - start < 500) {}
+				chord.playstring1_1500();
+				chord.playstring2_1500();
+				chord.playstring3_1500();
+				chord.playstring4_1500();
+				chord.playstring5_1500();
+				chord.playstring6_1500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1250();
+				chord.playstring2_1250();
+				chord.playstring3_1250();
+				chord.playstring4_1250();
+				chord.playstring5_1250();
+				chord.playstring6_1250();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1000();
+				chord.playstring2_1000();
+				chord.playstring3_1000();
+				chord.playstring4_1000();
+				chord.playstring5_1000();
+				chord.playstring6_1000();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_750();
+				chord.playstring2_750();
+				chord.playstring3_750();
+				chord.playstring4_750();
+				chord.playstring5_750();
+				chord.playstring6_750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_500();
+				chord.playstring2_500();
+				chord.playstring3_500();
+				chord.playstring4_500();
+				chord.playstring5_500();
+				chord.playstring6_500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_250();
+				chord.playstring2_250();
+				chord.playstring3_250();
+				chord.playstring4_250();
+				chord.playstring5_250();
+				chord.playstring6_250();
+			}
+
+			if (technique == "strummingPattern4") {
+				chord.playstring1_2000();
+				chord.playstring2_2000();
+				chord.playstring3_2000();
+				chord.playstring4_2000();
+				chord.playstring5_2000();
+				chord.playstring6_2000();
+
+				let start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1750();
+				chord.playstring2_1750();
+				chord.playstring3_1750();
+				chord.playstring4_1750();
+				chord.playstring5_1750();
+				chord.playstring6_1750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1500();
+				chord.playstring2_1500();
+				chord.playstring3_1500();
+				chord.playstring4_1500();
+				chord.playstring5_1500();
+				chord.playstring6_1500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1250();
+				chord.playstring2_1250();
+				chord.playstring3_1250();
+				chord.playstring4_1250();
+				chord.playstring5_1250();
+				chord.playstring6_1250();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1000();
+				chord.playstring2_1000();
+				chord.playstring3_1000();
+				chord.playstring4_1000();
+				chord.playstring5_1000();
+				chord.playstring6_1000();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_750();
+				chord.playstring2_750();
+				chord.playstring3_750();
+				chord.playstring4_750();
+				chord.playstring5_750();
+				chord.playstring6_750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_500();
+				chord.playstring2_500();
+				chord.playstring3_500();
+				chord.playstring4_500();
+				chord.playstring5_500();
+				chord.playstring6_500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_250();
+				chord.playstring2_250();
+				chord.playstring3_250();
+				chord.playstring4_250();
+				chord.playstring5_250();
+				chord.playstring6_250();
+			}
+
+			if (technique == "strummingPattern5") {
+				chord.playstring1_2000();
+				chord.playstring2_2000();
+				chord.playstring3_2000();
+				chord.playstring4_2000();
+				chord.playstring5_2000();
+				chord.playstring6_2000();
+
+				let start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1750();
+				chord.playstring2_1750();
+				chord.playstring3_1750();
+				chord.playstring4_1750();
+				chord.playstring5_1750();
+				chord.playstring6_1750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1500();
+				chord.playstring2_1500();
+				chord.playstring3_1500();
+				chord.playstring4_1500();
+				chord.playstring5_1500();
+				chord.playstring6_1500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1250();
+				chord.playstring2_1250();
+				chord.playstring3_1250();
+				chord.playstring4_1250();
+				chord.playstring5_1250();
+				chord.playstring6_1250();
+
+				start = Date.now();
+				while (Date.now() - start < 500) {}
+				chord.playstring1_750();
+				chord.playstring2_750();
+				chord.playstring3_750();
+				chord.playstring4_750();
+				chord.playstring5_750();
+				chord.playstring6_750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_500();
+				chord.playstring2_500();
+				chord.playstring3_500();
+				chord.playstring4_500();
+				chord.playstring5_500();
+				chord.playstring6_500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_250();
+				chord.playstring2_250();
+				chord.playstring3_250();
+				chord.playstring4_250();
+				chord.playstring5_250();
+				chord.playstring6_250();
+			}
+
+			if (technique == "strummingPattern6") {
+				chord.playstring1_2000();
+				chord.playstring2_2000();
+				chord.playstring3_2000();
+				chord.playstring4_2000();
+				chord.playstring5_2000();
+				chord.playstring6_2000();
+
+				let start = Date.now();
+				while (Date.now() - start < 500) {}
+				chord.playstring1_1500();
+				chord.playstring2_1500();
+				chord.playstring3_1500();
+				chord.playstring4_1500();
+				chord.playstring5_1500();
+				chord.playstring6_1500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1250();
+				chord.playstring2_1250();
+				chord.playstring3_1250();
+				chord.playstring4_1250();
+				chord.playstring5_1250();
+				chord.playstring6_1250();
+
+				start = Date.now();
+				while (Date.now() - start < 500) {}
+				chord.playstring1_750();
+				chord.playstring2_750();
+				chord.playstring3_750();
+				chord.playstring4_750();
+				chord.playstring5_750();
+				chord.playstring6_750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_500();
+				chord.playstring2_500();
+				chord.playstring3_500();
+				chord.playstring4_500();
+				chord.playstring5_500();
+				chord.playstring6_500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_250();
+				chord.playstring2_250();
+				chord.playstring3_250();
+				chord.playstring4_250();
+				chord.playstring5_250();
+				chord.playstring6_250();
+			}
+
+			if (technique == "strummingPattern7") {
+				chord.playstring1_2000();
+				chord.playstring2_2000();
+				chord.playstring3_2000();
+				chord.playstring4_2000();
+				chord.playstring5_2000();
+				chord.playstring6_2000();
+
+				let start = Date.now();
+				while (Date.now() - start < 500) {}
+				chord.playstring1_1500();
+				chord.playstring2_1500();
+				chord.playstring3_1500();
+				chord.playstring4_1500();
+				chord.playstring5_1500();
+				chord.playstring6_1500();
+
+				start = Date.now();
+				while (Date.now() - start < 750) {}
+				chord.playstring1_750();
+				chord.playstring2_750();
+				chord.playstring3_750();
+				chord.playstring4_750();
+				chord.playstring5_750();
+				chord.playstring6_750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_500();
+				chord.playstring2_500();
+				chord.playstring3_500();
+				chord.playstring4_500();
+				chord.playstring5_500();
+				chord.playstring6_500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_250();
+				chord.playstring2_250();
+				chord.playstring3_250();
+				chord.playstring4_250();
+				chord.playstring5_250();
+				chord.playstring6_250();
+			}
+
+			if (technique == "strummingPattern8") {
+				chord.playstring1_2000();
+				chord.playstring2_2000();
+				chord.playstring3_2000();
+				chord.playstring4_2000();
+				chord.playstring5_2000();
+				chord.playstring6_2000();
+
+				let start = Date.now();
+				while (Date.now() - start < 500) {}
+				chord.playstring1_1500();
+				chord.playstring2_1500();
+				chord.playstring3_1500();
+				chord.playstring4_1500();
+				chord.playstring5_1500();
+				chord.playstring6_1500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_1250();
+				chord.playstring2_1250();
+				chord.playstring3_1250();
+				chord.playstring4_1250();
+				chord.playstring5_1250();
+				chord.playstring6_1250();
+
+				start = Date.now();
+				while (Date.now() - start < 500) {}
+				chord.playstring1_750();
+				chord.playstring2_750();
+				chord.playstring3_750();
+				chord.playstring4_750();
+				chord.playstring5_750();
+				chord.playstring6_750();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_500();
+				chord.playstring2_500();
+				chord.playstring3_500();
+				chord.playstring4_500();
+				chord.playstring5_500();
+				chord.playstring6_500();
+
+				start = Date.now();
+				while (Date.now() - start < 250) {}
+				chord.playstring1_250();
+				chord.playstring2_250();
+				chord.playstring3_250();
+				chord.playstring4_250();
+				chord.playstring5_250();
+				chord.playstring6_250();
+			}
+		}
+
+		//MAIN FUNCTION
+		function main() {
+
+			let tone = document.querySelector('input[name="tone"]:checked').value;
+
+			//if (tone == "metal") {
+			//  	metal();
+			//}
+
+			//if (tone == "classical") {
+			//  	classical();
+			//}
+
+			if (tone == "rock") {
+			  	rock();
+			}
+
+			let duration = document.querySelector('input[name="duration"]:checked').value;
+
+			if (duration == 30) {
+				structure30seconds();
+			}
+
+			//if (duration == 120) {
+			//	  structure120seconds();
+			//}
+
+			//if (duration == 168) {
+			//	  structure168seconds();
+			//}
+		}
+
+		//PARTS
+		function intro() {
+			chord1 = chordProgression[0] + "major";
+			chord2 = chordProgression[1] + "minor";
+			chord3 = chordProgression[2] + "minor";
+			chord4 = chordProgression[3] + "major";
+			chord5 = chordProgression[4] + "major";
+			chord6 = chordProgression[5] + "minor";
+			chord7 = chordProgression[6] + "diminished";
+
+			//set a random picking patter
+			p = Math.floor((Math.random() * 4) + 1);
+
+			//set 3 random chords
+			a = Math.floor((Math.random() * 6) + 1);
+			b = Math.floor((Math.random() * 6) + 1);
+			c = Math.floor(Math.random() * 1 + 1);
+
+			//1st chord
+			x = "pickingPattern" + p
+			chord(chord1, x);
+
+			//2nd chord
+			let start = Date.now();
+			while (Date.now() - start < 2000) {}
+
+			if (a == 1) {
+				chord(chord1, x);
+			}
+
+			if (a == 2) {
+				chord(chord2, x);
+			}
+
+			if (a == 3) {
+				chord(chord3, x);
+			}
+
+			if (a == 4) {
+				chord(chord4, x);
+			}
+
+			if (a == 5) {
+				chord(chord5, x);
+			}
+
+			if (a == 6) {
+				chord(chord6, x);
+			}
+
+			if (a == 7) {
+				chord(chord7, x);
+			}
+
+			//3rd chord
+			start = Date.now();
+			while (Date.now() - start < 2000) {}
+
+			if (b == 1) {
+				chord(chord1, x);
+			}
+
+			if (b == 2) {
+				chord(chord2, x);
+			}
+
+			if (b == 3) {
+				chord(chord3, x);
+			}
+
+			if (b == 4) {
+				chord(chord4, x);
+			}
+
+			if (b == 5) {
+				chord(chord5, x);
+			}
+
+			if (b == 6) {
+				chord(chord6, x);
+			}
+
+			if (b == 7) {
+				chord(chord7, x);
+			}
+
+			//4th chord
+			start = Date.now();
+			while (Date.now() - start < 2000) {}
+
+			if (c == 4) {
+				chord(chord1, x);
+			}
+
+			if (c == 5) {
+				chord(chord2, x);
+			}
+		}
+
+		function verse() {
+			//set a random strumming pattern
+			p = Math.floor((Math.random() * 7) + 1);
+
+			//1st chord
+			chord(chord1, "strummingPattern" + p);
+
+			//2nd chord
+			let start = Date.now();
+			while (Date.now() - start < 2000) {}
+
+			if (a == 1) {
+				chord(chord1, "strummingPattern" + p);
+			}
+
+			if (a == 2) {
+				chord(chord2, "strummingPattern" + p);
+			}
+
+			if (a == 3) {
+				chord(chord3, "strummingPattern" + p);
+			}
+
+			if (a == 4) {
+				chord(chord4, "strummingPattern" + p);
+			}
+
+			if (a == 5) {
+				chord(chord5, "strummingPattern" + p);
+			}
+
+			if (a == 6) {
+				chord(chord6, "strummingPattern" + p);
+			}
+
+			if (a == 7) {
+				chord(chord7, "strummingPattern" + p);
+			}
+
+			//3rd chord
+			start = Date.now();
+			while (Date.now() - start < 2000) {}
+
+			if (b == 1) {
+				chord(chord1, "strummingPattern" + p);
+			}
+
+			if (b == 2) {
+				chord(chord2, "strummingPattern" + p);
+			}
+
+			if (b == 3) {
+				chord(chord3, "strummingPattern" + p);
+			}
+
+			if (b == 4) {
+				chord(chord4, "strummingPattern" + p);
+			}
+
+			if (b == 5) {
+				chord(chord5, "strummingPattern" + p);
+			}
+
+			if (b == 6) {
+				chord(chord6, "strummingPattern" + p);
+			}
+
+			if (b == 7) {
+				chord(chord7, "strummingPattern" + p);
+			}
+
+			//4th chord
+			start = Date.now();
+			while (Date.now() - start < 2000) {}
+
+			if (c == 4) {
+				chord(chord1, "strummingPattern" + p);
+			}
+
+			if (c == 5) {
+				chord(chord2, "strummingPattern" + p);
+			}
+		}
+
+		function pre(bars) {
+			console.log("pre")
+		}
+
+		function chorus(bars) {
+			console.log("chorus")
+		}
+
+		function bridge(bars) {
+			console.log("bridge")
+		}
+
+		function solo(bars) {
+			console.log("solo")
+		}
+
+		//CHORD PROGRESSIONS
+		//function metal() {
+			
+		//}
+
+		//function classical() {
+
+		//}
+
+		function rock() {
+			let modes = ['IONIAN', 'DORIAN', 'PHRYGIAN', 'LYDIAN', 'MIXOLYDIAN', 'AEOLIAN', 'LOCRIAN'];
+			let mode = modes[Math.floor ( Math.random() * modes.length)];
+
+			//IONIAN
+			if (mode == 'IONIAN') {
+				chordProgression.push(notes[pos + 2]);
+				if (chordProgression[1] == undefined) {
+					chordProgression[1] = notes[pos - 10]
+				}
+				chordProgression.push(notes[pos + 4]);
+				if (chordProgression[2] == undefined) {
+					chordProgression[2] = notes[pos - 8]
+				}
+				chordProgression.push(notes[pos + 5]);
+				if (chordProgression[3] == undefined) {
+					chordProgression[3] = notes[pos - 7]
+				}
+				chordProgression.push(notes[pos + 7]);
+				if (chordProgression[4] == undefined) {
+					chordProgression[4] = notes[pos - 5]
+				}
+				chordProgression.push(notes[pos + 9]);
+				if (chordProgression[5] == undefined) {
+					chordProgression[5] = notes[pos - 3]
+				}
+				chordProgression.push(notes[pos + 11]);
+				if (chordProgression[6] == undefined) {
+					chordProgression[6] = notes[pos - 1]
+				}
+			}
+
+			//DORIAN
+			if (mode == 'DORIAN') {
+				chordProgression.push(notes[pos + 2]);
+				if (chordProgression[1] == undefined) {
+					chordProgression[1] = notes[pos - 10]
+				}
+				chordProgression.push(notes[pos + 3]);
+				if (chordProgression[2] == undefined) {
+					chordProgression[2] = notes[pos - 9]
+				}
+				chordProgression.push(notes[pos + 5]);
+				if (chordProgression[3] == undefined) {
+					chordProgression[3] = notes[pos - 7]
+				}
+				chordProgression.push(notes[pos + 7]);
+				if (chordProgression[4] == undefined) {
+					chordProgression[4] = notes[pos - 5]
+				}
+				chordProgression.push(notes[pos + 9]);
+				if (chordProgression[5] == undefined) {
+					chordProgression[5] = notes[pos - 3]
+				}
+				chordProgression.push(notes[pos + 10]);
+				if (chordProgression[6] == undefined) {
+					chordProgression[6] = notes[pos - 2]
+				}
+			}
+
+			//PHRYGIAN
+			if (mode == 'PHRYGIAN') {
+				chordProgression.push(notes[pos + 1]);
+				if (chordProgression[1] == undefined) {
+					chordProgression[1] = notes[pos - 11]
+				}
+				chordProgression.push(notes[pos + 3]);
+				if (chordProgression[2] == undefined) {
+					chordProgression[2] = notes[pos - 9]
+				}
+				chordProgression.push(notes[pos + 5]);
+				if (chordProgression[3] == undefined) {
+					chordProgression[3] = notes[pos - 7]
+				}
+				chordProgression.push(notes[pos + 7]);
+				if (chordProgression[4] == undefined) {
+					chordProgression[4] = notes[pos - 5]
+				}
+				chordProgression.push(notes[pos + 8]);
+				if (chordProgression[5] == undefined) {
+					chordProgression[5] = notes[pos - 4]
+				}
+				chordProgression.push(notes[pos + 10]);
+				if (chordProgression[6] == undefined) {
+					chordProgression[6] = notes[pos - 2]
+				}
+			}
+
+			//LYDIAN
+			if (mode == 'LYDIAN') {
+				chordProgression.push(notes[pos + 2]);
+				if (chordProgression[1] == undefined) {
+					chordProgression[1] = notes[pos - 10]
+				}
+				chordProgression.push(notes[pos + 4]);
+				if (chordProgression[2] == undefined) {
+					chordProgression[2] = notes[pos - 8]
+				}
+				chordProgression.push(notes[pos + 6]);
+				if (chordProgression[3] == undefined) {
+					chordProgression[3] = notes[pos - 6]
+				}
+				chordProgression.push(notes[pos + 7]);
+				if (chordProgression[4] == undefined) {
+					chordProgression[4] = notes[pos - 5]
+				}
+				chordProgression.push(notes[pos + 9]);
+				if (chordProgression[5] == undefined) {
+					chordProgression[5] = notes[pos - 3]
+				}
+				chordProgression.push(notes[pos + 11]);
+				if (chordProgression[6] == undefined) {
+					chordProgression[6] = notes[pos - 1]
+				}
+			}
+
+			//MIXOLYDIAN
+			if (mode == 'MIXOLYDIAN') {
+				chordProgression.push(notes[pos + 2]);
+				if (chordProgression[1] == undefined) {
+					chordProgression[1] = notes[pos - 10]
+				}
+				chordProgression.push(notes[pos + 4]);
+				if (chordProgression[2] == undefined) {
+					chordProgression[2] = notes[pos - 8]
+				}
+				chordProgression.push(notes[pos + 5]);
+				if (chordProgression[3] == undefined) {
+					chordProgression[3] = notes[pos - 7]
+				}
+				chordProgression.push(notes[pos + 7]);
+				if (chordProgression[4] == undefined) {
+					chordProgression[4] = notes[pos - 5]
+				}
+				chordProgression.push(notes[pos + 9]);
+				if (chordProgression[5] == undefined) {
+					chordProgression[5] = notes[pos - 3]
+				}
+				chordProgression.push(notes[pos + 10]);
+				if (chordProgression[6] == undefined) {
+					chordProgression[6] = notes[pos - 2]
+				}
+			}
+
+			//AEOLIAN
+			if (mode == 'AEOLIAN') {
+				chordProgression.push(notes[pos + 2]);
+				if (chordProgression[1] == undefined) {
+					chordProgression[1] = notes[pos - 10]
+				}
+				chordProgression.push(notes[pos + 3]);
+				if (chordProgression[2] == undefined) {
+					chordProgression[2] = notes[pos - 9]
+				}
+				chordProgression.push(notes[pos + 5]);
+				if (chordProgression[3] == undefined) {
+					chordProgression[3] = notes[pos - 7]
+				}
+				chordProgression.push(notes[pos + 7]);
+				if (chordProgression[4] == undefined) {
+					chordProgression[4] = notes[pos - 5]
+				}
+				chordProgression.push(notes[pos + 8]);
+				if (chordProgression[5] == undefined) {
+					chordProgression[5] = notes[pos - 4]
+				}
+				chordProgression.push(notes[pos + 10]);
+				if (chordProgression[6] == undefined) {
+					chordProgression[6] = notes[pos - 2]
+				}
+			}
+
+			//LOCRIAN
+			if (mode == 'LOCRIAN') {
+				chordProgression.push(notes[pos + 1]);
+				if (chordProgression[1] == undefined) {
+					chordProgression[1] = notes[pos - 11]
+				}
+				chordProgression.push(notes[pos + 3]);
+				if (chordProgression[2] == undefined) {
+					chordProgression[2] = notes[pos - 9]
+				}
+				chordProgression.push(notes[pos + 5]);
+				if (chordProgression[3] == undefined) {
+					chordProgression[3] = notes[pos - 7]
+				}
+				chordProgression.push(notes[pos + 6]);
+				if (chordProgression[4] == undefined) {
+					chordProgression[4] = notes[pos - 6]
+				}
+				chordProgression.push(notes[pos + 8]);
+				if (chordProgression[5] == undefined) {
+					chordProgression[5] = notes[pos - 4]
+				}
+				chordProgression.push(notes[pos + 10]);
+				if (chordProgression[6] == undefined) {
+					chordProgression[6] = notes[pos - 2]
+				}
+			}
+		}
+
+		//SONG STRUCTURE
+		function structure30seconds() {
+			intro();
+
+			let start = Date.now();
+			while (Date.now() - start < 8000) {}
+			verse();
+
+			start = Date.now();
+			while (Date.now() - start < 8000) {}
+			chorus();
+		}
+
+		/*function structure120seconds() {
+			intro();
+
+			let start = Date.now();
+			while (Date.now() - start < 8000) {}
+			verse(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			pre(4);
+
+			start = Date.now();
+			while (Date.now() - start < 8000) {}
+			chorus(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			verse(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			pre(4);
+
+			start = Date.now();
+			while (Date.now() - start < 8000) {}
+			chorus(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			bridge(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			chorus(8);
+		}*/
+
+		/*function structure168seconds() {
+			intro();
+
+			let start = Date.now();
+			while (Date.now() - start < 8000) {}
+			verse(16);
+
+			start = Date.now();
+			while (Date.now() - start < 32000) {}
+			pre(4);
+
+			start = Date.now();
+			while (Date.now() - start < 8000) {}
+			chorus(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			verse(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			pre(4);
+
+			start = Date.now();
+			while (Date.now() - start < 8000) {}
+			chorus(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			bridge(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			chorus(8);
+
+			start = Date.now();
+			while (Date.now() - start < 16000) {}
+			solo(16);
+		}*/
+	</script>
+	<style type="text/css">
+	body{
+		animation-name: fadeIn;
+		animation-duration: 2s;
+		background: linear-gradient(0deg, white, rgb(255, 204, 153));
+		background-repeat:no-repeat;
+	}
+
+	@keyframes fadeIn {
+	  0% {
+	    padding-top: 10%;
+	    opacity: 0.2;
+	  }
+	  100% {
+	    padding-top: 0%;
+	    opacity: 1;
+	  }
+	}
+
+	h1 {
+		padding-top: 3%;
+	}
+
+	h3{
+		padding-top: 2%;
+	}
+
+	#grid-container {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	@media (min-width: 400px){
+		#grid-container{
+			grid-template-columns: 1fr 1fr;
+		}
+	 }
+
+	button {
+		width: 100px;
+		border-radius: 10px;
+		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+		opacity: 0.8;
+	    transition: 0.3s;
+	    background-color: #f4511e;
+	}
+
+	button:active {
+		transform: translateY(2px);
+		disabled: true;
+	}
+	</style>
 </head>
 <body>
 <header>
@@ -20,14 +4939,12 @@
 	<center>
 	<p>Set the tone</p>
 		<form>
-  			<input type="radio" id="metal" name="tone" value="metal" required>
+  			<input type="radio" name="tone" value="metal" id="metal">
   			<label for="metal">Metal</label><br>
-  			<input type="radio" id="country" name="tone" value="country" required>
-  			<label for="country">Country</label><br>
-  			<input type="radio" id="jazz" name="tone" value="jazz" required>
-  			<label for="jazz">Jazz</label><br>
-  			<input type="radio" id="blues" name="tone" value="blues" required>
-  			<label for="blues">Blues</label><br>
+  			<input type="radio" name="tone" value="classical" id="classical">
+  			<label for="classical">Classical</label><br>
+  			<input type="radio" name="tone" value="rock" id="rock">
+  			<label for="rock">Rock</label><br>
 		</form> 
 	</center>
 	</div>
@@ -35,12 +4952,12 @@
 	<center>
 	<p>Choose the duration</p>
 		<form>
-  			<input type="radio" id="30" name="duration" value="30" required>
+  			<input type="radio" id="30" name="duration" value="30">
   			<label for="30">30 seconds (ringtone)</label><br>
-  			<input type="radio" id="120" name="duration" value="120" required>
+  			<input type="radio" id="120" name="duration" value="120">
   			<label for="120">2 minutes (short)</label><br>
-  			<input type="radio" id="240" name="duration" value="240" required>
-  			<label for="240">4 minutes (normal)</label>
+  			<input type="radio" id="168" name="duration" value="168">
+  			<label for="168">3 minutes (normal)</label>
 		</form>
 	</center>
 	</div>
@@ -48,7 +4965,7 @@
 	<br>
 	<br>
 
-	<center><button type="button">Create</button></center>
+	<center><button type="button" id="button" onclick="main();">Create</button></center>
 
 	<br>
 	<br>
@@ -58,13 +4975,11 @@
 	<br>
 	<br>
 	<br>
-
-
-	<div id="graph"></div>
 
 </main>
 <footer>
-	<p id="footer">&copy Created by Christos Papaventsis</p>
+	<h6 id="footer">Copyright &copy 2021 by Christos Papaventsis <br>
+	All rights reserved. No part of this script may be reproduced or used in any manner without written permission of the copyright owner.</h6>
 </footer>
 </body>
 </html>
